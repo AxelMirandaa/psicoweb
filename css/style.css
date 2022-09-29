@@ -1,0 +1,226 @@
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+/*--------- MENU PRINCIPAL ------------*/
+
+.logo-img {
+    height: 6vh;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-text {
+    margin: 5px;
+    font-size: 0px;
+}
+
+.botones-end-menu .material-icons {
+    font-size: 30px;
+    color: #e67e22;
+}
+
+.logo-text-music {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #e67e22;
+}
+
+.logo-text-pro {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #16a085;
+    ;
+}
+
+.material-icons, .material-icons-text {
+    vertical-align: middle;
+}
+
+.material-icons-text {
+    padding-left: 5px;
+}
+
+.busqueda-web {
+    flex: 4;
+    margin-right: 20px;
+}
+
+.busqueda-web button {
+    border: #e67e22;
+    ;
+}
+
+.busqueda-web .search-icon {
+    color: #e67e22;
+    ;
+}
+
+/*--------- NAVBAR CATEGORIAS ------------*/
+
+.titulo-categorias {
+    font-weight: 600;
+    margin: 12px 0 3px 0;
+}
+
+.menu-categorias {
+    background: #16a085;
+    border-radius: 5px;
+}
+
+.menu-categorias a {
+    color: white;
+}
+
+.menu-categorias .dropdown-menu a {
+    color: grey;
+}
+
+.menu-categorias .nav-item:hover {
+    background-color: #e67e22;
+}
+
+/*------------ CARRUSEL -----------------*/
+
+#carrusel {
+    margin-top: 30px;
+    text-shadow: 2px 2px #16a085;
+}
+
+.img-carrusel {
+    width: 100%;
+    height: 400px;
+}
+
+/*-------------- CARD PRODUCTOS --------------*/
+
+.producto {
+    padding-top: 25px;
+}
+
+/* --------------- TITULO SECCION PRODUCTOS H3 -----------------*/
+
+.titulo {
+    padding: 10px 10px;
+    text-align: center;
+    margin-top: 2rem;
+    background-color: #e67e22;
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+/*---------------- FOOTER -----------------*/
+
+ul {
+    list-style: none;
+}
+
+.footer {
+    background-color: #16a085;
+    padding: 50px 0;
+    margin-top: 3rem;
+    bottom: 1;
+    border-radius: 5px;
+}
+
+.col-md-4 h4 {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.col-md-4 ul li a {
+    margin: 8px 0;
+    text-decoration: none;
+    color: #ffffff;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.col-md-4 ul li a:hover {
+    padding-left: 8px;
+}
+
+.col-md-4 .social a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 10px 10px 0;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    transition: all 0.5s ease;
+}
+
+.col-md-4 .social a:hover {
+    color: #24262b;
+    background-color: #ffffff;
+}
+
+/*------------------ FOOTER RESPONSIVE ----------------- */
+
+@media(max-width: 767px) {
+    .col-md-4 {
+        width: 50%;
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width: 574px) {
+    .col-md-4 {
+        width: 100%;
+    }
+    .centrar {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+
+
+
+
+
+/*------------ PAGINA PRODUCTO ------------*/
+
+#imagen-producto{
+    width: 400px;
+    height: 40vh;
+    margin-left: 8rem;
+    border-radius: 5px;
+}
+
+#detalle-producto{
+        text-align: center;
+        padding-right: 9rem;
+
+}
+
+.descripcion{
+    padding: 15px 45px;
+    margin-top: 1rem;
+    border: 2px solid #16a085;
+}
+
+
+@media(max-width: 992px) {
+#detalle-producto{
+    padding-right: 0;
+}
+}
+
+
+@media(max-width: 768px) {
+    
+    #imagen-producto{
+        width: 100%;
+        margin-left: 0;
+    }
+  
+}
