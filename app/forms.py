@@ -5,7 +5,6 @@ from .models import Especialista
 
 
 
-
 class especialistaForm(forms.ModelForm):
     
     class Meta:

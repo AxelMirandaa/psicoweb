@@ -1,10 +1,9 @@
 import imp
 from django.contrib import admin
-from .models import Boleta,Cita,Comuna,Consultas,Convenio,Especialidad,Especialista,FichaAtencion,Paciente,Prevision,Region,Taller,TipoTitulo,Tutor
+from .models import Boleta,Cita,Comuna,Consultas,Convenio,Especialidad,Especialista,FichaAtencion,Paciente,Prevision,Region,Taller,Titulo
 
 
 # Register your models here.
-
 
 admin.site.register(Boleta)
 admin.site.register(Cita)
@@ -18,7 +17,8 @@ admin.site.register(Paciente)
 admin.site.register(Prevision)
 admin.site.register(Region)
 admin.site.register(Taller)
-admin.site.register(TipoTitulo)
-admin.site.register(Tutor)
+admin.site.register(Titulo)
+
+
 
 
