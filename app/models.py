@@ -102,19 +102,19 @@ class FichaAtencion(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
-        return self.id_ficha
+        return str(self.id_ficha)#self.id_ficha
 
 
 class Cita(models.Model):
     id_cita = models.AutoField(primary_key=True)
     fecha = models.DateField(null=True)
-    hora = models.DateField(null=True)
+    hora = models.IntegerField(null=True)
     lugar = models.CharField(max_length=30, blank=True, null=True)
     paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT, null=True)
     especialista = models.ForeignKey(Especialista, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
-        return self.id_cita
+        return str(self.id_cita)
 
 
 opciones_consulta = [

@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     
-
+    {% block js %}
+    
+    {% endblock %}
     <!-- CSS only -->
 </head>
 
@@ -69,7 +71,7 @@
                                             <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
                                         {% else %}
                                             <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesión</a></li>
-                                            <li><a class="dropdown-item" href="#">Registrate</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'registro' %}">Registrate</a></li>
                                         {% endif %}
                                         </ul>
                                     </li>
@@ -198,6 +200,21 @@
     </div>     
 
 
+    
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% if messages %}
+      {% for m in messages %}
+        <script>
+          Swal.fire({
+            "title":"Felicidades",
+            "text":"{{m}}",
+            "icon":"success"
+
+          })
+        </script>
+      {% endfor %} 
+    {% endif %}
 
 
 
