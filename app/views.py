@@ -7,9 +7,26 @@ from .models import Especialista, FichaAtencion
 from .forms import especialistaForm, fichaForm, CustomUserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required, permission_required
+from rest_framework import viewsets
+from .serializers import EspecialistaSerializer
 
 
 # Create your views here.
+
+class EspecialistaViewset(viewsets.ModelViewSet):
+    queryset = Especialista.objects.all()
+    serializer_class = EspecialistaSerializer
+
+
+
+def detalle_especialista(request,id):
+    especialista = get_object_or_404(Especialista, rut_especialista=id)
+
+    data = {
+        'form': especialistaForm(instance=especialista)
+    }
+    return render(request, 'app/detalleEspecialista.html',data)
 
 def home(request):
     especialistas = Especialista.objects.all()
@@ -19,7 +36,7 @@ def home(request):
 
     return render(request, 'app/home.html', data)
 
-
+@permission_required('app.add_especialista')
 def agregar_especialista(request):
 
     data = {
@@ -37,7 +54,7 @@ def agregar_especialista(request):
     return render(request, 'app/especialistas_lista/agregar.html', data)
 
 
-
+@permission_required('app.view_especialista')
 def listar_especialistas(request):
     especialistas = Especialista.objects.all()
     data = {
@@ -49,7 +66,7 @@ def listar_especialistas(request):
 
 
 
-
+@permission_required('app.change_especialista')
 def modificar_especialista(request, id):
     
     especialista = get_object_or_404(Especialista, rut_especialista=id)
@@ -70,7 +87,7 @@ def modificar_especialista(request, id):
     return render(request,'app/especialistas_lista/modificar.html',data)
 
 
-
+@permission_required('app.delete_especialista')
 def eliminar_especialista(request, id):
     especialista = get_object_or_404(Especialista, rut_especialista=id)
     especialista.delete()

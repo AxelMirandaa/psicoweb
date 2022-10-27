@@ -1,0 +1,40 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+
+{% block contenido %}
+
+
+ <!----------- IMAGEN DEL PRODUCTO ------------->
+
+ 
+ <section class="container mt-5">
+    <h3 class="titulo mb-5">especialista </h3>
+<div class="row">
+    <div class="col-md-12 col-lg-6"> 
+        <img   id="imagen-producto" src="{% static 'app/img/img-1.jpg' %}" alt="especialista">
+    </div>
+    <div id="detalle-producto" class="col-md-12 col-lg-6 mt-5">
+        <h5>Precio consulta: <span style="color: green; font-weight:bold;">$30.000</span></h5>
+        <h5>Codigo: aaa123</h5>
+        <br>
+        <a href="" class="btn btn-success">Agendar hora</a>
+        <br>
+        <br>
+    </div>
+</div>
+
+
+<div class=" mt-5">
+    <h3 class="titulo">Descrpción del especialista</h3>
+    <div class=" descripcion mb-5">
+        <h5>Nombre del especialista</h5> 
+        <p> ipsum dolor sit amet consectetur adipisicing elit. Tempora eaque culpa repellat amet tenetur, unde quia officia, quo maiores reiciendis omnis molestias praesentium, voluptatibus quaerat optio rem inventore corrupti ullam consequuntur ducimus fugit odio ad. Dolor ab molestias quia ex blanditiis harum maiores odit id natus! Nulla ducimus cupiditate accusamus.</p>
+    </div>
+    
+</div>
+</section>
+
+
+{% endblock %}

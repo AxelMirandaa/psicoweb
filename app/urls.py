@@ -1,8 +1,15 @@
 import imp
 from unicodedata import name
-from django.urls import path
+from django.db import router
+from django.urls import path, include
 from .views import home, agregar_especialista, modificar_especialista, listar_especialistas,\
-    eliminar_especialista, citasAgendadas, crearFicha, especialista, ficha, infoPacientes, registro
+    eliminar_especialista, citasAgendadas, crearFicha, especialista, ficha, infoPacientes, registro, EspecialistaViewset, detalle_especialista
+from rest_framework import routers 
+
+
+router = routers.DefaultRouter()
+router.register('especialista', EspecialistaViewset)
+
 
 urlpatterns = [
     path('', home, name="home"),
@@ -15,7 +22,10 @@ urlpatterns = [
     path('especialista', especialista, name="especialista"),
     path('ficha', ficha, name="ficha"),
     path('infoPacientes', infoPacientes, name="infoPacientes"),
-    path('registro/', registro, name="registro")
+    path('registro/', registro, name="registro"),
+    path('api/', include(router.urls)),
+    path('detalle-especialista/<id>/', detalle_especialista, name="detalle_especialista"),
+    
 
 
 ]

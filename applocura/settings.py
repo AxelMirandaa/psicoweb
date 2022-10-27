@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'app',
     'colorfield',
     'crispy_forms',
+    'rest_framework',
+    'pwa',
 ]
 
 CRISPY_TEMPLATE_PACK ='bootstrap4'

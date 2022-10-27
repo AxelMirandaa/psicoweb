@@ -60,10 +60,12 @@
                                                 class="material-icons-text">Mi
                                                 cuenta</span>
                                         </a>
-                                        
+                                        {% if perms.app.add_especialista %}
                                         <a href="{% url 'agregar_especialista' %}" class="nav-link ">Agregar especialista</a>
+                                        {% endif %}
+                                        {% if perms.app.view_especialista %}
                                         <a href="{% url 'listar_especialistas' %}" class="nav-link ">Listado especialistas</a>
-                                        
+                                        {% endif %}
 
                                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                                         {% if user.is_authenticated %}
