@@ -62,10 +62,12 @@ class Especialidad(models.Model):
 
 class Especialista(models.Model):
     rut_especialista = models.CharField(primary_key=True, max_length=15)
+    dv = models.CharField(max_length=1, null=True)
     nombre = models.CharField(max_length=30)
     apellido = models.CharField(max_length=30, null=True)
     correo = models.CharField(max_length=40)
     telefono = models.IntegerField(null=True)
+    precio_consulta = models.IntegerField(null=True)
     imagen = models.ImageField(upload_to="especialistas" ,blank=True, null=True)
     region = models.ForeignKey(Region, on_delete=models.PROTECT, null=True)
     especialidad = models.ForeignKey(Especialidad, on_delete=models.PROTECT, null=True)
