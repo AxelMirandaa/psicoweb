@@ -6,4 +6,3 @@ django-crispy-forms
 PyMySQL
 mysqlclient
 django-rest-framework
-django-pwa

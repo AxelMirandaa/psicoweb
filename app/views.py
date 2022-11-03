@@ -19,14 +19,23 @@ class EspecialistaViewset(viewsets.ModelViewSet):
     serializer_class = EspecialistaSerializer
 
 
+def paypal(request):
+    return render(request, 'app/paypal.html')
+
 
 def detalle_especialista(request,id):
-    especialista = get_object_or_404(Especialista, rut_especialista=id)
 
-    data = {
-        'form': especialistaForm(instance=especialista)
-    }
-    return render(request, 'app/detalleEspecialista.html',data)
+   ## especialista = get_object_or_404(Especialista, rut_especialista=id)
+
+    try:
+        datos = Especialista.objects.filter(rut_especialista=id).get()
+    except Especialista.DoesNotExist:
+        pass
+
+  #  data = {
+   #     'form': especialistaForm(instance=especialista)
+   # }
+    return render(request, 'app/detalleEspecialista.html',{'datos':datos})
 
 def home(request):
     especialistas = Especialista.objects.all()

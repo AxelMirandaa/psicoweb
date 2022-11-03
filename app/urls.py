@@ -3,7 +3,8 @@ from unicodedata import name
 from django.db import router
 from django.urls import path, include
 from .views import home, agregar_especialista, modificar_especialista, listar_especialistas,\
-    eliminar_especialista, citasAgendadas, crearFicha, especialista, ficha, infoPacientes, registro, EspecialistaViewset, detalle_especialista
+    eliminar_especialista, citasAgendadas, crearFicha, especialista, ficha, infoPacientes, \
+    registro, EspecialistaViewset, detalle_especialista, paypal
 from rest_framework import routers 
 
 
@@ -25,6 +26,8 @@ urlpatterns = [
     path('registro/', registro, name="registro"),
     path('api/', include(router.urls)),
     path('detalle-especialista/<id>/', detalle_especialista, name="detalle_especialista"),
+    path('paypal/',paypal, name='paypal'),
+
     
 
 

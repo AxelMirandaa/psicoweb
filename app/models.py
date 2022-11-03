@@ -68,6 +68,7 @@ class Especialista(models.Model):
     correo = models.CharField(max_length=40)
     telefono = models.IntegerField(null=True)
     precio_consulta = models.IntegerField(null=True)
+    descripcion = models.CharField(max_length=200)
     imagen = models.ImageField(upload_to="especialistas" ,blank=True, null=True)
     region = models.ForeignKey(Region, on_delete=models.PROTECT, null=True)
     especialidad = models.ForeignKey(Especialidad, on_delete=models.PROTECT, null=True)
