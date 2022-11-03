@@ -1,6 +1,6 @@
 from imp import source_from_cache
 from pyexpat import model
-from attr import field
+#from attr import field
 from .models import Especialista
 from rest_framework import serializers
 

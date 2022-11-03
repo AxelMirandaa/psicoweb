@@ -1,4 +1,4 @@
-{% extends 'app/especialistaBase.html' %}
+{% extends 'app/pacienteBase.html' %}
 
 {% block contenido %}
 
@@ -8,10 +8,6 @@
         <div class="container">
             <h3 class="titulo">Citas</h3>
 
-            <div id="date">
-                <label for="fecha" class="formulario__label">Fecha:</label>
-                <input type="date" required>
-            </div>
             <div class="row">
                 <div class="col-12 col-md-6 offset-md-3">
                     <div class="card">
@@ -29,7 +25,8 @@
                                 <tr>
                                     <td> {{ci.paciente}}</td><td> {{ci.fecha}}</td>
                                     <td> {{ci.hora}}</td><td> {{ci.lugar}}</td>
-                                    <td><a href="{% url 'cita' ci.id_cita %}">Abrir</a></td>
+                                    <td><a href="{% url 'modificarCita' ci.id_cita %}">Modificar</a></td>
+                                    <td><a href="{% url 'cancelarCita' ci.id_cita %}">Cancelar</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

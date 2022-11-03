@@ -3,8 +3,8 @@ from django.forms import PasswordInput
 from django.shortcuts import render, redirect, get_object_or_404 
 from django.urls import is_valid_path
 from requests import request
-from .models import Especialista, FichaAtencion
-from .forms import especialistaForm, fichaForm, CustomUserCreationForm
+from .models import Especialista, FichaAtencion, Cita, Paciente, Boleta
+from .forms import especialistaForm, fichaForm, CustomUserCreationForm, citaForm, pacienteForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
@@ -104,11 +104,6 @@ def eliminar_especialista(request, id):
 
     return redirect(to="listar_especialistas")
 
-
-def citasAgendadas(request):
-    
-    return render(request, 'app/citasAgendadas.html')
-
 def crearFicha(request):
     
     data = {
@@ -126,22 +121,210 @@ def crearFicha(request):
     return render(request, 'app/crearFicha.html', data)
 
 def especialista(request):
-    
-    return render(request, 'app/especialista.html')
+    citas = Cita.objects.all()
+    data = {
+        'citas' : citas
+    }
+    return render(request, 'app/especialista.html', data)
+
+def paciente(request):
+    citas = Cita.objects.all()
+    data = {
+        'citas' : citas
+    }
+    return render(request, 'app/paciente.html', data)
 
 def ficha(request, id):
     ficha = FichaAtencion.objects.get(id_ficha=id)
     data = {
-        'form' : fichaForm(instance=ficha)
+        'form':fichaForm(instance=ficha)
+    }
+
+    if request.method == 'POST':
+        formulario = fichaForm(data=request.POST, instance=ficha)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "guardado correctamente"
+    #    else:
+    #        data["form"] = formulario
+    return render(request, 'app/ficha.html', data)
+
+def listaFichas(request):
+    ficha = FichaAtencion.objects.all()
+    data = {
+        'ficha' : ficha
     }
     
-    return render(request, 'app/ficha.html', data)
+    return render(request, 'app/listaFichas.html', data)
+
+def listaCitas(request):
+    citas = Cita.objects.all()
+    data = {
+        'citas' : citas
+    }
+    
+    return render(request, 'app/citasAgendadas.html', data)
+
+def cita(request, id):
+    cita = Cita.objects.get(id_cita=id)
+    data = {
+        'form':citaForm(instance=cita)
+    }
+    if request.method == 'POST':
+        formulario = citaForm(data=request.POST, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "guardado correctamente"
+        else:
+            data["form"] = formulario
+    
+    return render(request, 'app/cita.html', data)
+
+def crearCita(request):
+    
+    data = {
+        'form':citaForm()
+    }
+
+    if request.method == 'POST':
+        formulario = citaForm(data=request.POST, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "guardado correctamente"
+        else:
+            data["form"] = formulario
+    
+    return render(request, 'app/crearCita.html', data)
 
 def infoPacientes(request):
     
     return render(request, 'app/infoPacientes.html')
 
+def registroPaciente(request):
+    
+    data = {
+        'form': pacienteForm()
+    }
 
+    if request.method == 'POST':
+        formulario = pacienteForm(data=request.POST, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "guardado correctamente"
+        else:
+            data["form"] = formulario
+    
+    return render(request, 'app/registroPaciente.html', data)
+
+def listaPacientes(request):
+    paciente = Paciente.objects.all()
+    data = {
+        'paciente' : paciente
+    }
+    
+    return render(request, 'app/listaPacientes.html', data)
+
+def listadoEspecialista(request):
+    especialistas = Especialista.objects.all()
+    data = {
+        'especialistas': especialistas
+
+    }
+
+    
+    return render(request, 'app/listadoEspecialista.html', data)
+
+def modificarPaciente(request, id):
+    paciente = Paciente.objects.get(rut_paciente=id)
+    data = {
+        'form':pacienteForm(instance=paciente)
+    }
+
+    if request.method == 'POST':
+        formulario = pacienteForm(data=request.POST, instance=paciente)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "guardado correctamente"
+    #    else:
+    #        data["form"] = formulario
+    return render(request, 'app/modificarPaciente.html', data)
+
+def eliminarPaciente(request, id):
+    paciente = get_object_or_404(Paciente, rut_paciente=id)
+    paciente.delete()
+    return redirect(to="listaPacientes")
+
+def citasPaciente(request):
+    citas = Cita.objects.all()
+    data = {
+        'citas' : citas
+    }
+    
+    return render(request, 'app/citasPaciente.html', data)
+
+def agendarCita(request):
+    
+    data = {
+        'form':citaForm()
+    }
+
+    if request.method == 'POST':
+        formulario = citaForm(data=request.POST, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "guardado correctamente"
+        else:
+            data["form"] = formulario
+    
+    
+    return render(request, 'app/agendarCita.html', data)
+
+def modificarCita(request, id):
+    
+    cita = Cita.objects.get(id_cita=id)
+    data = {
+        'form':citaForm(instance=cita)
+    }
+
+    if request.method == 'POST':
+        formulario = citaForm(data=request.POST, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "guardado correctamente"
+        else:
+            data["form"] = formulario
+    
+    return render(request, 'app/modificarCita.html', data)
+
+def cancelarCita(id):
+    cita = Cita.objects.get(id_cita=id)
+    cita.delete()
+    return redirect(to="citasPaciente")
+
+def pagoCita(request, id):
+    
+    cita = Cita.objects.get(id_cita=id)
+    data = {
+        'form':citaForm(instance=cita)
+    }
+
+    #if request.method == 'POST':
+    #    formulario = citaForm(data=request.POST, files=request.FILES)
+    #    if formulario.is_valid():
+    #        formulario.save()
+    #        data["mensaje"] = "guardado correctamente"
+    #    else:
+    #        data["form"] = formulario
+    
+    
+    return render(request, 'app/pagoCita.html', data)
+
+def pagar(request):#, id):
+    
+    
+    
+    
+    return render(request, 'app/pagar.html')#, data)
 
 def registro(request):
     data = {
@@ -154,7 +337,7 @@ def registro(request):
             formulario.save()
             user = authenticate(username = formulario.cleaned_data["username"], password = formulario.cleaned_data["password1"])
             login(request, user)
-            messages.success(request, "Te haz registrado correctamente")
+            messages.success(request, "Te has registrado correctamente")
             return  redirect(to="home")
 
     return render(request, 'registration/registro.html', data)

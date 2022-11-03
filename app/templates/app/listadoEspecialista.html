@@ -1,0 +1,45 @@
+{% extends 'app/pacienteBase.html' %}
+
+{% block contenido %}
+
+
+
+<div class="card">
+    <div class="card-body">
+        <h2>Listado de especialistas</h2>
+        <hr>
+        <table class="table table-striped table-hover table-responsive-sm">
+            <tr>
+                <th>Rut</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>opciones</th>
+            </tr>
+        
+            {% for e in especialistas %} 
+        
+            <tr>
+                <td>{{e.rut_especialista}}</td>
+                <td>{{e.nombre}}</td>
+                <td>{{e.apellido}}</td>
+                <td>{{e.correo}}</td>
+                <td>{{e.telefono}}</td>
+                <td>
+
+                    <a href="{% url 'agendarCita' %}" class="btn btn-info btn-sm ">Agendar cita</a>
+
+                </td>
+            </tr>
+        
+            {% endfor %}
+        
+        </table>
+        
+
+    </div>
+</div>
+
+
+{% endblock %}

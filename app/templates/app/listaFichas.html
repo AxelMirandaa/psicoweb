@@ -1,0 +1,28 @@
+{% extends 'app/especialistaBase.html' %}
+
+{% block contenido %}
+
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card">
+            <h3>Listado de fichas</h3>
+            <table class="table" border=1>
+                <thead>
+                    <tr>
+                        <th scope="col">Paciente</th><th scope="col">Fecha</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fi in ficha %}
+                    <tr>
+                        <td> {{fi.paciente}}</td><td> {{fi.fecha}}</td>
+                        <td><a href="{% url 'ficha' fi.id_ficha %}">Abrir</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
