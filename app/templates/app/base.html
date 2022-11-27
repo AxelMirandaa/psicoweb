@@ -80,7 +80,7 @@
                                 </div>
                             </div>
 
-                            <!------------ CATEGORIAS MOVIL ----------------->
+                            <!-- CATEGORIAS MOVIL -->
                             <div class="top-menu-movil d-flex justify-content-between d-lg-none">
                                 <li class="nav-item d-lg-none">
                                     <a class="nav-link" href="#"><span class="material-icons">person</span><span
@@ -100,8 +100,8 @@
                                         </a>
                                         <ul class="dropdown-menu mx-auto text-center"
                                             aria-labelledby="navbarScrollingDropdown">
-                                            <li><a class="dropdown-item" href="#">Psicologos</a></li>
-                                            <li><a class="dropdown-item" href="#">Psiquiatras</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'especialista' %}">Psicologos</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'especialista' %}">Psiquiatras</a></li>
                                             <li><a class="dropdown-item" href="#">Nutricionistas</a></li>
                                             <li><a class="dropdown-item" href="#">Ver todo</a></li>
 
@@ -155,8 +155,8 @@
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                         aria-expanded="false">Especialistas</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Psicologos</a></li>
-                        <li><a class="dropdown-item" href="#">Psiquiatras</a></li>
+                        <li><a class="dropdown-item" href="{% url 'especialista' %}">Psicologos</a></li>
+                        <li><a class="dropdown-item" href="{% url 'especialista' %}">Psiquiatras</a></li>
                         <li><a class="dropdown-item" href="#">Nutricionistas</a></li>
                         <li><a class="dropdown-item" href="#">Ver todo</a></li>
 
@@ -173,6 +173,7 @@
                         <li><a class="dropdown-item" href="#">online</a></li>
                         <li><a class="dropdown-item" href="#">precenciales</a></li>
                         <li><a class="dropdown-item" href="#">Ver todo</a></li>
+                        <li><a class="dropdown-item" href="{% url 'paciente' %}">Paciente</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
