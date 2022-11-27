@@ -200,7 +200,21 @@ html {
 
 
 
+/*
+.marcas {
+    width: 100%;
+    height: 80px;
+    background-color: #f06728;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 
+.marcas>img {
+    width: 50px;
+    height: 50px;
+}
+*/
 /*Paralax*/
 
 

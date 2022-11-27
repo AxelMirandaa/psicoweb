@@ -1,6 +1,5 @@
 django
 pillow
-cx_oracle
 django-admin-interface
 django-crispy-forms
 PyMySQL

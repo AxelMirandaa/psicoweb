@@ -23,7 +23,8 @@
             },
             // Finalize the transaction after payer approval
             onApprove: function(data){
-              return fetch('{% url 'home' %}',{
+            var url = "{% url 'home' %}"
+              return fetch(url,{
                 headers:{
                   'content-type': 'application/json'
                 },
