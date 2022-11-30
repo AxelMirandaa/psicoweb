@@ -23,8 +23,13 @@
                         <tbody>
                             {% for ci in citas %}
                             <tr>
-                                <td> {{ci.paciente}}</td><td> {{ci.fecha}}</td>
-                                <td> {{ci.hora}}</td><td> {{ci.lugar}}</td>
+                                <td> {{ci.usuario}}</td><td> {{ci.fecha}}</td>
+                                {% if ci.hora == 0  %}
+                                <td> 12:00 pm</td>
+                                {% else %}
+                                <td> {{ci.hora}}:00 pm</td>
+                                {% endif %}
+                                <td> {{ci.lugar}}</td>
                                 <td><a href="{% url 'cita' ci.id_cita %}">Abrir</a></td>
                             </tr>
                             {% endfor %}

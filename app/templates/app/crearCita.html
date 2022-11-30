@@ -1,13 +1,16 @@
-{% extends 'app/especialistaBase.html' %}
+{% extends 'app/Base.html' %}
 
 {% block contenido %}
 
 {% load crispy_forms_tags %}
-
+<br>
+<br>
     <div class="row">
         <div class="col-12 col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
+                <h2>Agendar Cita</h2>
+                <hr>
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{form | crispy}}

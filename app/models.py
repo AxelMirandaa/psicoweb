@@ -107,7 +107,8 @@ class Especialista(models.Model):
     tipo_titulo = models.ForeignKey(Titulo, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
-        return self.nombre
+        nombre_apellido = self.nombre+" "+self.apellido
+        return nombre_apellido
 
     class Meta:
         db_table = "Especialista"
@@ -137,7 +138,7 @@ class Paciente(models.Model):
 
 class FichaAtencion(models.Model):
     id_ficha = models.AutoField(primary_key=True)
-    fecha = models.DateField(null=True)
+    fecha = models.DateField(null=True) #hay que poner que sea autonow !!!!!
     observaciones = models.CharField(max_length=500, blank=True, null=True)
     motivo_consulta = models.CharField(max_length=500, blank=True, null=True)
     especialista = models.ForeignKey(Especialista, on_delete=models.PROTECT, null=True)
@@ -152,12 +153,45 @@ class FichaAtencion(models.Model):
         verbose_name_plural =  "Fichas atención"
 
 
+horas = [
+    [0, "12:00"],
+    [1, "13:00"],
+    [2, "14:00"],
+    [3, "15:00"],
+    [4, "16:00"],
+    [5, "17:00"],
+    [6, "18:00"],
+    [7, "19:00"],
+    [8, "20:00"]
+]
+
+class Estado_cita(models.Model):
+    id_estado = models.AutoField(primary_key=True)
+    nombre_estado = models.CharField(max_length=20, null=True)
+
+    def __str__(self):
+        return str(self.nombre_estado)
+
+    class Meta:
+        db_table = "Estado_Cita"
+        verbose_name = "Estado cita"
+        verbose_name_plural =  "Estados citas"
+
+
+
+estado = [
+    [0, "Programada"],
+    [1, "Atendido"],
+    [2, "Cancelada"],
+]
+
 class Cita(models.Model):
     id_cita = models.AutoField(primary_key=True)
     fecha = models.DateField(null=True)
-    hora = models.IntegerField(null=True)
-    lugar = models.CharField(max_length=30, blank=True, null=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT, null=True)
+    hora = models.IntegerField(choices=horas, null=True)
+    lugar = models.ForeignKey(Region ,on_delete=models.PROTECT, null=True )
+    estado = models.ForeignKey(Estado_cita, on_delete=models.PROTECT, null=True)
+    usuario = models.ForeignKey(User, on_delete=models.PROTECT, null=True, related_name='citas')
     especialista = models.ForeignKey(Especialista, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
@@ -178,7 +212,7 @@ opciones_consulta = [
 
 class Consulta(models.Model):
     id_consulta = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=2, null=True)
+    nombre = models.CharField(max_length=20, null=True)
     correo = models.CharField(max_length=30, null=True)
     telefono = models.IntegerField(null=True)
     opciones_consulta = models.IntegerField(choices=opciones_consulta, null=True)

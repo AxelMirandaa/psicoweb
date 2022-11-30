@@ -2,42 +2,63 @@
 
 {% block contenido %}
 
-    <!-- Citas -->
-    <section>
+<!-- Citas -->
+<section>
 
-        <div class="container">
-            <h3 class="titulo">Citas</h3>
+    <div class="container">
+        <h3 class="titulo">Citas</h3>
 
+        <!--
             <div id="date">
                 <label for="fecha" class="formulario__label">Fecha:</label>
                 <input type="date" required>
+            </div>    
+            -->
+
+
+        <div class="card">
+            <div class="card-body">
+                <h2>Registro de citas</h2>
+                <hr>
+                <table class="table table-striped table-hover table-responsive-sm">
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Ubicación</th>
+                        <th>Especialista</th>
+                        <th>Estado</th>
+                        <!--
+                        <th>Opciones</th>
+                        -->
+                        
+                    </tr>
+                    <tbody>
+                        {% for ci in citas %}
+                        <tr>
+                            <td> {{ci.usuario}}</td>
+                            <td> {{ci.fecha}}</td>
+                            {% if ci.hora == 0  %}
+                                <td> 12:00 pm</td>
+                            {% else %}
+                                <td> {{ci.hora}}:00 pm</td>
+                            {% endif %}
+                            <td> {{ci.lugar}}</td>
+                            <td> {{ci.especialista}}</td>
+                            <td style="color: green;"> {{ci.estado}}</td>
+                            <!--
+                            <td><a href="{% url 'cita' ci.id_cita %}">Abrir</a></td>
+                            -->
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <div class="row">
-                <div class="col-12 col-md-6 offset-md-3">
-                    <div class="card">
-                        <h3>Listado de fichas</h3>
-                        <table class="table" border=1>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Paciente</th><th scope="col">Fecha</th>
-                                    <th scope="col">Hora</th><th scope="col">Ubicación</th>
-                                    <th scope="col">Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for ci in citas %}
-                                <tr>
-                                    <td> {{ci.paciente}}</td><td> {{ci.fecha}}</td>
-                                    <td> {{ci.hora}}</td><td> {{ci.lugar}}</td>
-                                    <td><a href="{% url 'cita' ci.id_cita %}">Abrir</a></td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+
         </div>
-    </section>
+    </div>
+
+</section>
 
 {% endblock %}

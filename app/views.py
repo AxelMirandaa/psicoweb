@@ -3,10 +3,11 @@ from django.forms import PasswordInput
 from django.shortcuts import render, redirect, get_object_or_404 
 from django.urls import is_valid_path
 from requests import request
-from .models import Especialista, FichaAtencion, Cita, Paciente, Boleta
+from .models import *
 from .forms import especialistaForm, fichaForm, CustomUserCreationForm, citaForm, pacienteForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, permission_required
 from rest_framework import viewsets
 from .serializers import EspecialistaSerializer
@@ -114,7 +115,7 @@ def crearFicha(request):
         formulario = fichaForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "guardado correctamente"
+            messages.success(request, "Ficha creada correctamente")
         else:
             data["form"] = formulario
     
@@ -144,7 +145,7 @@ def ficha(request, id):
         formulario = fichaForm(data=request.POST, instance=ficha)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "guardado correctamente"
+            messages.success(request, "Guardado correctamente")
     #    else:
     #        data["form"] = formulario
     return render(request, 'app/ficha.html', data)
@@ -156,9 +157,13 @@ def listaFichas(request):
     }
     
     return render(request, 'app/listaFichas.html', data)
-
+ 
+ #Mustra las citas del usuasrio logeado
+@login_required
 def listaCitas(request):
-    citas = Cita.objects.all()
+    usuario = request.user
+    citas = usuario.citas.all()
+    #citas = Cita.objects.all()
     data = {
         'citas' : citas
     }
@@ -174,14 +179,22 @@ def cita(request, id):
         formulario = citaForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "guardado correctamente"
+            messages.success(request, "Cita creada correctamente")
         else:
             data["form"] = formulario
     
     return render(request, 'app/cita.html', data)
 
+
+#Crea una cita con el usuario logeado 
+@login_required
 def crearCita(request):
     
+    user = get_object_or_404 (User, pk=request.user.pk)
+    estadoCita = get_object_or_404(Estado_cita, pk = 1)
+    valida_hora = Cita.objects.all()
+
+
     data = {
         'form':citaForm()
     }
@@ -189,8 +202,13 @@ def crearCita(request):
     if request.method == 'POST':
         formulario = citaForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
-            formulario.save()
-            data["mensaje"] = "guardado correctamente"
+            cita = formulario.save(commit=False)
+            cita.usuario = user
+            cita.estado = estadoCita
+
+            cita.save()
+            messages.success(request, "Cita creada correctamente")
+            return redirect(to="home")
         else:
             data["form"] = formulario
     
@@ -210,7 +228,7 @@ def registroPaciente(request):
         formulario = pacienteForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "guardado correctamente"
+            messages.success(request, "Agregado correctamente")
         else:
             data["form"] = formulario
     
@@ -244,7 +262,7 @@ def modificarPaciente(request, id):
         formulario = pacienteForm(data=request.POST, instance=paciente)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "guardado correctamente"
+            messages.success(request, "Modificado correctamente")
     #    else:
     #        data["form"] = formulario
     return render(request, 'app/modificarPaciente.html', data)
@@ -272,7 +290,7 @@ def agendarCita(request):
         formulario = citaForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "guardado correctamente"
+            messages.success(request, "Ficha creada correctamente")
         else:
             data["form"] = formulario
     
@@ -290,7 +308,7 @@ def modificarCita(request, id):
         formulario = citaForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "guardado correctamente"
+            messages.success(request, "Modificado correctamente")
         else:
             data["form"] = formulario
     
@@ -321,11 +339,10 @@ def pagoCita(request, id):
 
 def pagar(request):#, id):
     
-    
-    
-    
     return render(request, 'app/pagar.html')#, data)
 
+
+#REGISTRO DE USUARIOS
 def registro(request):
     data = {
         'form': CustomUserCreationForm()
