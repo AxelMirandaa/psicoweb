@@ -217,6 +217,7 @@ def registroPaciente(request):
     
     data = {
         'form': pacienteForm()
+        
     }
 
     if request.method == 'POST':

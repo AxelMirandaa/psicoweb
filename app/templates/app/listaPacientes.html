@@ -21,8 +21,8 @@
                 <tbody>
                     {% for pa in paciente %}
                     <tr>
-                        <td> {{pa.rut_paciente}}</td><td> {{pa.nombre}}</td>
-                        <td> {{pa.apellidos}}</td><td> {{pa.fecha_nacimiento}}</td>
+                        <td> {{pa.rut_paciente}}</td><td> {{pa.usuario.first_name}}</td>
+                        <td> {{pa.usuario.last_name}}</td><td> {{pa.fecha_nacimiento}}</td>
                         <td> {{pa.correo}}</td><td> {{pa.telefono}}</td>
                         <td><a href="{% url 'modificarPaciente' pa.rut_paciente %}">Modificar</a></td>
                         <td><a href="{% url 'eliminarPaciente' pa.rut_paciente %}">Eliminar</a></td>

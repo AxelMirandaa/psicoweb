@@ -121,17 +121,25 @@ class Especialista(models.Model):
 
 
 
+sexo = [
+    [0, "Femenino"],
+    [1, "Masculino"],
+    [2, "No especificado"]
+]
+
+
 class Paciente(models.Model):
     rut_paciente = models.CharField(primary_key=True, max_length=15)
     fecha_nacimiento = models.DateField()
     telefono = models.IntegerField()
-    sexo = models.CharField(max_length=1, null=True)
+    sexo = models.IntegerField(choices=sexo, null=True)
     convenio = models.ForeignKey(Convenio, on_delete=models.PROTECT, null=True)
     prevision = models.ForeignKey(Prevision, on_delete=models.PROTECT, null=True)
     usuario =  models.ForeignKey( User, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return self.rut_paciente
+        nombre_apellido = self.usuario.first_name+" "+self.usuario.last_name
+        return nombre_apellido
     
     class Meta:
         db_table = "Paciente"

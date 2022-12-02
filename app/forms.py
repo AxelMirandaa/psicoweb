@@ -10,6 +10,8 @@ from datetime import timedelta
 from django.utils.timezone import now
 
 
+class DateInput2(forms.DateInput):
+    input_type = 'date'
 
 #datepicker widgets
 class DateInput(forms.DateInput):
@@ -87,5 +89,10 @@ class pacienteForm(forms.ModelForm):
     
     class Meta:
         model = Paciente
-        fields = '__all__'       
+        fields = '__all__'
+        widgets = {
+            'fecha_nacimiento': DateInput2(),
+        }         
+
+
             
