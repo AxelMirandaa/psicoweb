@@ -13,6 +13,11 @@ body {
     align-items: center;
 }
 
+.imagen-destacada{
+    width: 50px;
+    height: 6vh;
+}
+
 .logo-text {
     margin: 5px;
     font-size: 0px;
@@ -274,6 +279,11 @@ h2{
     justify-content: center;
     align-items: center;
 }
+
+
+
+
+/*olw carrusel*/
 
 
 

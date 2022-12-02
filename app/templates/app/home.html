@@ -1,5 +1,7 @@
 {% extends 'app/base.html' %}
 
+
+
 {% load static %}
 
 
@@ -46,20 +48,22 @@
 <!--Paralax-->
 
 <!--
-<section class="texto">
-     
-    <h2>Hola q tal </h2>
-</section>
+    Carrusel owl
 
+-->
+
+
+
+
+
+
+
+
+<!--
 <section class="parallax-chico">
     <h2>Poner Titulo</h2>
 </section>
--->
 
-<!--
-<section class="texto">
-    <h2>Poner titulo </h2>
-</section>
 -->
 
 <section id="nosotros" class="center espacio">
@@ -78,7 +82,7 @@
             {% for e in especialistas %}
             <div class="col-md-3 col-sm-6  producto">
                 <div class="card">
-                    <img class="img" src="{{ e.imagen.url }}" class="card-img-top" alt="imagen">
+                    <img class="img" style="width: 254px; height: 220px;" src="{{ e.imagen.url }}" class="card-img-top" alt="imagen">
                     <div class="card-body">
                         <h5 class="card-title">{{e.nombre }}</h5>
                         <p class="card-text">{{ e.correo }}</p>
@@ -172,7 +176,6 @@
     </div>
     </div>
 </section>  
-
 
 
 

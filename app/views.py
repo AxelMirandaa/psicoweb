@@ -21,7 +21,15 @@ class EspecialistaViewset(viewsets.ModelViewSet):
 
 
 def paypal(request):
-    return render(request, 'app/paypal.html')
+
+    especialistas = Especialista.objects.all()
+    data = {
+        'especialistas':especialistas
+    }
+
+    
+
+    return render(request, 'app/paypal.html',data)
 
 
 def detalle_especialista(request,id):
@@ -209,9 +217,11 @@ def crearCita(request):
     
     return render(request, 'app/crearCita.html', data)
 
-def infoPacientes(request):
-    
-    return render(request, 'app/infoPacientes.html')
+
+
+
+
+
 
 def registroPaciente(request):
     
@@ -223,6 +233,8 @@ def registroPaciente(request):
     if request.method == 'POST':
         formulario = pacienteForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
+            messages.success(request, "Agregado correctamente")
+
             formulario.save()
             messages.success(request, "Agregado correctamente")
         else:
@@ -248,10 +260,15 @@ def listadoEspecialista(request):
     
     return render(request, 'app/listadoEspecialista.html', data)
 
+
+
+
+
+
 def modificarPaciente(request, id):
     paciente = Paciente.objects.get(rut_paciente=id)
     data = {
-        'form':pacienteForm(instance=paciente)
+        'form': pacienteForm(instance=paciente)
     }
 
     if request.method == 'POST':
@@ -259,13 +276,16 @@ def modificarPaciente(request, id):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificado correctamente")
-    #    else:
-    #        data["form"] = formulario
+            return redirect(to="listaPacientes")
+    
+        data["form"] = formulario
     return render(request, 'app/modificarPaciente.html', data)
 
 def eliminarPaciente(request, id):
     paciente = get_object_or_404(Paciente, rut_paciente=id)
     paciente.delete()
+    messages.success(request, "Eliminado correctamente")
+
     return redirect(to="listaPacientes")
 
 

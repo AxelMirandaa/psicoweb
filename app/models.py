@@ -9,8 +9,9 @@ from django.db import models
 from django.db.models.deletion import SET_DEFAULT
 from django.db.models.fields import NullBooleanField
 from django.contrib.auth.models import User 
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save, pre_delete
 from django.utils.text import slugify
+from django.dispatch import receiver
 from django.core.validators import validate_slug
 
 
@@ -33,7 +34,7 @@ class Region(models.Model):
 class Comuna(models.Model):
     id_comuna = models.IntegerField(primary_key=True)
     nombre_comuna = models.CharField(max_length=30, null=True)
-    region = models.ForeignKey(Region, on_delete=models.PROTECT, null=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.nombre_comuna
@@ -106,9 +107,9 @@ class Especialista(models.Model):
     precio_consulta = models.IntegerField(null=True)
     descripcion = models.CharField(max_length=200)
     imagen = models.ImageField(upload_to="especialistas" ,blank=True, null=True)
-    region = models.ForeignKey(Region, on_delete=models.PROTECT, null=True)
-    especialidad = models.ForeignKey(Especialidad, on_delete=models.PROTECT, null=True)
-    tipo_titulo = models.ForeignKey(Titulo, on_delete=models.PROTECT, null=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
+    especialidad = models.ForeignKey(Especialidad, on_delete=models.CASCADE, null=True)
+    tipo_titulo = models.ForeignKey(Titulo, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         nombre_apellido = self.nombre+" "+self.apellido
@@ -118,6 +119,27 @@ class Especialista(models.Model):
         db_table = "Especialista"
         verbose_name = "Especialista"
         verbose_name_plural =  "Especialistas"
+
+### Trigger tabla Especialista
+@receiver(post_save, sender=Especialista)
+def especialista_save(sender, instance, **kwargs):
+    if kwargs['created']:
+        Tracking.objects.create(descripcion=f"se creó el Especialista con el rut {instance.rut_especialista}")
+
+
+@receiver(pre_delete, sender=Especialista)
+def especialista_delete(sender, instance: Especialista, **kwargs):
+    if instance.rut_especialista is None:
+        pass
+    else:
+        Tracking.objects.create(descripcion=f"se eliminó el Especialista con el rut {instance.rut_especialista}")
+        
+
+
+
+
+
+
 
 
 
@@ -130,12 +152,12 @@ sexo = [
 
 class Paciente(models.Model):
     rut_paciente = models.CharField(primary_key=True, max_length=15)
-    fecha_nacimiento = models.DateField()
-    telefono = models.IntegerField()
+    fecha_nacimiento = models.DateField(null=True)
+    telefono = models.IntegerField(null=True)
     sexo = models.IntegerField(choices=sexo, null=True)
-    convenio = models.ForeignKey(Convenio, on_delete=models.PROTECT, null=True)
-    prevision = models.ForeignKey(Prevision, on_delete=models.PROTECT, null=True)
-    usuario =  models.ForeignKey( User, on_delete=models.DO_NOTHING)
+    convenio = models.ForeignKey(Convenio, on_delete=models.CASCADE, null=True)
+    prevision = models.ForeignKey(Prevision, on_delete=models.CASCADE, null=True)
+    usuario =  models.ForeignKey( User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         nombre_apellido = self.usuario.first_name+" "+self.usuario.last_name
@@ -146,6 +168,34 @@ class Paciente(models.Model):
         verbose_name = "Paciente"
         verbose_name_plural =  "Pacientes"
 
+### Trigger tabla Paciente
+@receiver(post_save, sender=Paciente)
+def paciente_save(sender, instance, **kwargs):
+    if kwargs['created']:
+        Tracking.objects.create(descripcion=f"se creó el Paciente con el rut {instance.rut_paciente}")
+
+
+@receiver(pre_delete, sender=Paciente)
+def paciente_delete(sender, instance: Paciente, **kwargs):
+    if instance.rut_paciente is None:
+        pass
+    else:
+        Tracking.objects.create(descripcion=f"se eliminó el Paciente con el rut {instance.rut_paciente}")
+
+
+class Tracking(models.Model):
+    descripcion = models.TextField()
+    fecha = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        db_table = 'tracking'
+        verbose_name = 'Tracking'
+        verbose_name_plural = 'Trackings'
+
+
 
 
 class FichaAtencion(models.Model):
@@ -153,8 +203,8 @@ class FichaAtencion(models.Model):
     fecha = models.DateField(null=True) #hay que poner que sea autonow !!!!!
     observaciones = models.CharField(max_length=500, blank=True, null=True)
     motivo_consulta = models.CharField(max_length=500, blank=True, null=True)
-    especialista = models.ForeignKey(Especialista, on_delete=models.PROTECT, null=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT, null=True)
+    especialista = models.ForeignKey(Especialista, on_delete=models.CASCADE, null=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return str(self.id_ficha)#self.id_ficha
@@ -201,11 +251,11 @@ class Cita(models.Model):
     id_cita = models.AutoField(primary_key=True)
     fecha = models.DateField(null=True)
     hora = models.IntegerField(choices=horas, null=True)
-    lugar = models.ForeignKey(Region ,on_delete=models.PROTECT, null=True )
-    estado = models.ForeignKey(Estado_cita, on_delete=models.PROTECT, null=True)
+    lugar = models.ForeignKey(Region ,on_delete=models.CASCADE, null=True )
+    estado = models.ForeignKey(Estado_cita, on_delete=models.CASCADE, null=True)
     slug = models.SlugField(null=False,blank=False, unique=True, validators=[validate_slug])
-    usuario = models.ForeignKey(User, on_delete=models.PROTECT, null=True, related_name='citas')
-    especialista = models.ForeignKey(Especialista, on_delete=models.PROTECT, null=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='citas')
+    especialista = models.ForeignKey(Especialista, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return str(self.id_cita)
@@ -253,7 +303,7 @@ class Taller(models.Model):
     descripcion = models.CharField(max_length=300, blank=True, null=True)
     imagen = models.ImageField(upload_to="talleres" ,blank=True ,null=True)
     precio = models.IntegerField(blank=True, null=True)
-    especialista = models.ForeignKey(Especialista, on_delete=models.PROTECT, null=True)
+    especialista = models.ForeignKey(Especialista, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.nombre_taller
@@ -282,7 +332,7 @@ class Tutor(models.Model):
     apellido = models.CharField(max_length=50, null=True)
     correo = models.CharField(max_length=50, null=True)
     telefono = models.IntegerField(null=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT, null=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.rut_tutor

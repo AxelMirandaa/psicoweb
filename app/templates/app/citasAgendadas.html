@@ -28,6 +28,7 @@
                         <th>Ubicación</th>
                         <th>Especialista</th>
                         <th>Estado</th>
+                        <th>Opciones</th>
                         <!--
                         <th>Opciones</th>
                         -->
@@ -36,7 +37,7 @@
                     <tbody>
                         {% for ci in citas %}
                         <tr>
-                            <td> {{ci.usuario}}</td>
+                            <td> {{ci.usuario.first_name}} {{ci.usuario.last_name}}</td>
                             <td> {{ci.fecha}}</td>
                             {% if ci.hora == 0  %}
                                 <td> 12:00 pm</td>
@@ -46,9 +47,11 @@
                             <td> {{ci.lugar}}</td>
                             <td> {{ci.especialista}}</td>
                             <td style="color: green;"> {{ci.estado}}</td>
-                            <!--
-                            <td><a href="{% url 'cita' ci.id_cita %}">Abrir</a></td>
-                            -->
+                            <td>
+                                <a href="{% url 'cita' ci.id_cita %}" class="btn btn-info btn-sm ">modificar</a>                        
+                            </td>
+                            
+                            
                             
                         </tr>
                         {% endfor %}

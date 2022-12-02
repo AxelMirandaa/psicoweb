@@ -1,6 +1,6 @@
 import imp
 from django.contrib import admin
-from .models import Boleta,Cita,Comuna,Consulta,Convenio,Especialidad,Especialista,FichaAtencion,Paciente,Prevision,Region,Taller,Titulo,Estado_cita
+from .models import Boleta,Cita,Comuna,Consulta,Convenio,Especialidad,Especialista,FichaAtencion,Paciente,Prevision,Region,Taller,Titulo,Estado_cita,Tracking
 from utilidades import formularios
 
 
@@ -13,11 +13,13 @@ class EspecialistaAdmin(admin.ModelAdmin):
 	list_display = ('rut_especialista','dv','nombre','apellido','correo','telefono','precio_consulta','especialidad')
 	search_fields = ('rut_especialista','dv','nombre','apellido','correo','telefono','precio_consulta','especialidad')
 
+class TrackingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'descripcion', 'fecha')
+    search_fields = ('id', 'descripcion')
 
 
 
-
-
+admin.site.register( Tracking,TrackingAdmin)
 admin.site.register(Boleta)
 admin.site.register(Cita, CitaAdmin)
 admin.site.register(Comuna)
