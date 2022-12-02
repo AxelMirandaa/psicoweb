@@ -11,11 +11,6 @@ from django.utils.timezone import now
 
 
 
-
-  
-        
-
-
 #datepicker widgets
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -37,6 +32,8 @@ class TimePickerInput(forms.TimeInput):
 class DateTimePickerInput(forms.DateTimeInput):
         input_type = 'datetime'
 
+
+#Formulario para la cración de especialistas
 class especialistaForm(forms.ModelForm):
      
     class Meta:
@@ -44,6 +41,7 @@ class especialistaForm(forms.ModelForm):
         fields = '__all__'
 
 
+#Formalario para la creación de fichas
 class fichaForm(forms.ModelForm):
     
     class Meta:
@@ -54,11 +52,14 @@ class fichaForm(forms.ModelForm):
         }     
 
 
+#Formulario para el registro de usuarios
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username','first_name','last_name','email','password1','password2']
     
+
+#Formulario para el registro de las citas medicas
 class citaForm(forms.ModelForm):
     
     class Meta:

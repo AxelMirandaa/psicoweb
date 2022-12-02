@@ -267,13 +267,7 @@ def eliminarPaciente(request, id):
     paciente.delete()
     return redirect(to="listaPacientes")
 
-def citasPaciente(request):
-    citas = Cita.objects.all()
-    data = {
-        'citas' : citas
-    }
-    
-    return render(request, 'app/citasPaciente.html', data)
+
 
 def agendarCita(request):
     
@@ -309,32 +303,12 @@ def modificarCita(request, id):
     
     return render(request, 'app/modificarCita.html', data)
 
-def cancelarCita(id):
+def cancelarCita(request,id):
     cita = Cita.objects.get(id_cita=id)
     cita.delete()
-    return redirect(to="citasPaciente")
+    return redirect(to="citasAgendadas")
 
-def pagoCita(request, id):
-    
-    cita = Cita.objects.get(id_cita=id)
-    data = {
-        'form':citaForm(instance=cita)
-    }
 
-    #if request.method == 'POST':
-    #    formulario = citaForm(data=request.POST, files=request.FILES)
-    #    if formulario.is_valid():
-    #        formulario.save()
-    #        data["mensaje"] = "guardado correctamente"
-    #    else:
-    #        data["form"] = formulario
-    
-    
-    return render(request, 'app/pagoCita.html', data)
-
-def pagar(request):#, id):
-    
-    return render(request, 'app/pagar.html')#, data)
 
 
 #REGISTRO DE USUARIOS
