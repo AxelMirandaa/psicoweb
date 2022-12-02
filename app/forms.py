@@ -12,18 +12,7 @@ from django.utils.timezone import now
 
 
 
-def clean(self):
-    try:
-        cita = Cita.objects.get(hora = self.cleaned_data["hora"], fecha = self.cleaned_data["fecha"])
-        
-        if not self.instance.pk:
-            raise forms.ValidationError("hora ya tomada")
-        elif self.instance.pk!=cita.pk:
-            raise forms.ValidationError("cambio no permitido, hora ya tomada")
-    except Cita.DoesNotExist:
-        pass
-    return self.cleaned_data
-            
+  
         
 
 
@@ -79,6 +68,19 @@ class citaForm(forms.ModelForm):
         widgets = {
             'fecha': DateInput(),
         }       
+    
+    def clean(self):
+        try:
+            cita = Cita.objects.get(hora = self.cleaned_data["hora"], fecha = self.cleaned_data["fecha"])
+        
+            if not self.instance.pk:
+                raise forms.ValidationError("hora ya tomada")
+            elif self.instance.pk!=cita.pk:
+                raise forms.ValidationError("cambio no permitido, hora ya tomada")
+        except Cita.DoesNotExist:
+            pass
+        return self.cleaned_data
+          
         
 class pacienteForm(forms.ModelForm):
     

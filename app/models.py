@@ -10,6 +10,9 @@ from django.db.models.deletion import SET_DEFAULT
 from django.db.models.fields import NullBooleanField
 from django.contrib.auth.models import User 
 from django.db.models.signals import pre_save
+from django.utils.text import slugify
+from django.core.validators import validate_slug
+
 
 
 
@@ -192,7 +195,7 @@ class Cita(models.Model):
     hora = models.IntegerField(choices=horas, null=True)
     lugar = models.ForeignKey(Region ,on_delete=models.PROTECT, null=True )
     estado = models.ForeignKey(Estado_cita, on_delete=models.PROTECT, null=True)
-    slug = models.SlugField(null=False,blank=False, unique=True)
+    slug = models.SlugField(null=False,blank=False, unique=True, validators=[validate_slug])
     usuario = models.ForeignKey(User, on_delete=models.PROTECT, null=True, related_name='citas')
     especialista = models.ForeignKey(Especialista, on_delete=models.PROTECT, null=True)
 
@@ -207,7 +210,7 @@ class Cita(models.Model):
 def set_slug(sender, instance, *args, **kwargs):
     if instance.slug:
         return
-    instance.slug = instance.fecha+instance.hora
+    instance.slug = slugify(instance.fecha.strftime('%d-%m-%Y') + str(instance.hora))
 
 pre_save.connect(set_slug, sender = Cita)
 

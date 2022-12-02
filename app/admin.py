@@ -7,6 +7,7 @@ from utilidades import formularios
 class CitaAdmin(admin.ModelAdmin):
 	list_display = ('id_cita','fecha','hora','lugar','usuario','especialista')
 	search_fields = ('id_cita','fecha','hora','lugar','usuario','especialista')
+	exclude = ('slug',) 
 
 class EspecialistaAdmin(admin.ModelAdmin):
 	list_display = ('rut_especialista','dv','nombre','apellido','correo','telefono','precio_consulta','especialidad')
