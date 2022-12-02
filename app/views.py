@@ -128,12 +128,7 @@ def especialista(request):
     }
     return render(request, 'app/especialista.html', data)
 
-def paciente(request):
-    citas = Cita.objects.all()
-    data = {
-        'citas' : citas
-    }
-    return render(request, 'app/paciente.html', data)
+
 
 def ficha(request, id):
     ficha = FichaAtencion.objects.get(id_ficha=id)

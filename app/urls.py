@@ -3,7 +3,7 @@ from unicodedata import name
 from django.db import router
 from django.urls import path, include
 from .views import home, agregar_especialista, modificar_especialista, listar_especialistas,\
-    eliminar_especialista, crearFicha, especialista, paciente, ficha, listaFichas, infoPacientes, \
+    eliminar_especialista, crearFicha, especialista, ficha, listaFichas, infoPacientes, \
     crearCita, cita, listaCitas, registroPaciente, listaPacientes, modificarPaciente, eliminarPaciente, \
     citasPaciente, agendarCita, modificarCita, cancelarCita, pagar, pagoCita, listadoEspecialista, \
     registro, EspecialistaViewset, detalle_especialista, paypal
@@ -23,7 +23,6 @@ urlpatterns = [
     path('citasAgendadas', listaCitas, name="citasAgendadas"),
     path('crearFicha', crearFicha, name="crearFicha"),
     path('especialista', especialista, name="especialista"),
-    path('paciente', paciente, name="paciente"),
     path('ficha/<id>', ficha, name="ficha"),
     path('listaFichas', listaFichas, name="listaFichas"),
     path('crearCita', crearCita, name="crearCita"),
