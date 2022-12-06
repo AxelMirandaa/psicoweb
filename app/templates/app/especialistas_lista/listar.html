@@ -53,10 +53,10 @@
                 <td>{{e.telefono}}</td>
                 <td>
                     {% if perms.app.change_especialista %}
-                    <a href="{% url 'modificar_especialista' e.rut_especialista %}" class="btn btn-info btn-sm ">modificar</a>
+                    <a href="{% url 'modificar_especialista' e.id_especialista %}" class="btn btn-info btn-sm ">modificar</a>
                     {% endif %}
                     {% if perms.app.delete_especialista %}
-                    <a href="#" onclick="eliminarEspecialista({{e.rut_especialista}})" class="btn btn-danger btn-sm">eliminar</a>
+                    <a href="#" onclick="eliminarEspecialista({{e.id_especialista}})" class="btn btn-danger btn-sm">eliminar</a>
                     {% endif %}
                 </td>
             </tr>

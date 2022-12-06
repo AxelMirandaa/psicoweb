@@ -40,7 +40,8 @@ class especialistaForm(forms.ModelForm):
      
     class Meta:
         model = Especialista
-        fields = '__all__'
+        #fields = '__all__'
+        fields = ['rut_especialista','dv','nombre','apellido','correo','telefono','precio_consulta','descripcion','imagen','region','especialidad','tipo_titulo']
 
 
 #Formalario para la creación de fichas
@@ -90,10 +91,20 @@ class pacienteForm(forms.ModelForm):
     
     class Meta:
         model = Paciente
-        fields = '__all__'
+        #fields = '__all__'
+        fields = ['rut_paciente','fecha_nacimiento','telefono','genero','genero','prevision']
+
         widgets = {
             'fecha_nacimiento': DateInput2(),
         }         
 
+class pacienteModificaForm(forms.ModelForm):
+    
+    class Meta:
+        model = Paciente
+        fields = ['rut_paciente','fecha_nacimiento','telefono','genero','genero','prevision']
+        widgets = {
+            'fecha_nacimiento': DateInput2(),
+        }    
 
             

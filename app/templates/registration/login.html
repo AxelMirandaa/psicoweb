@@ -1,43 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+{% extends 'app/base.html' %} {% block contenido %} {% load crispy_forms_tags %}
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<br />
+<br />
 
-</head>
-<body>
-
-    {% load crispy_forms_tags %}
-    <br>
-    <br>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6 offset-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h2>Iniciar Sesion</h2>
-                        <hr>
-                        <form action="" method="POST">
-                            {% csrf_token %}
-                            {{ form | crispy}}
-                            <a href="{% url 'home' %}">ir al inicio</a> |
-                            <a href="{% url 'registro' %}">registrate</a>
-                            <input type="submit" class="btn btn-success float-right" value="ingresar">
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h2>Iniciar Sesion</h2>
+          <hr />
+          <form action="" method="POST">
+            {% csrf_token %} {{ form | crispy}}
+            <a href="{% url 'home' %}">ir al inicio</a> |
+            <a href="{% url 'registro' %}">registrate</a>
+            <input
+              type="submit"
+              class="btn btn-success float-right"
+              value="ingresar"
+            />
+          </form>
         </div>
+      </div>
     </div>
-    
-</body>
-</html>
+  </div>
+</div>}
+
+{% endblock %}

@@ -58,18 +58,7 @@ class Titulo(models.Model):
         verbose_name_plural =  "Titulos"
 
 
-class Convenio(models.Model):
-    id_convenio = models.AutoField(primary_key=True)
-    nombre_convenio = models.CharField(max_length=30, null=True)
-    descuento = models.IntegerField()
 
-    def __str__(self):
-        return self.nombre_convenio
-    
-    class Meta:
-        db_table = "Convenio"
-        verbose_name = "Convenio"
-        verbose_name_plural =  "Convenios"
 
 class Prevision(models.Model):
     id_prevision = models.AutoField(primary_key=True)
@@ -80,8 +69,8 @@ class Prevision(models.Model):
     
     class Meta:
         db_table = "Prevision"
-        verbose_name = "Prevision"
-        verbose_name_plural =  "Previones"
+        verbose_name = "Previsión"
+        verbose_name_plural =  "Previsiones"
 
 
 class Especialidad(models.Model):
@@ -98,7 +87,8 @@ class Especialidad(models.Model):
 
 
 class Especialista(models.Model):
-    rut_especialista = models.CharField(primary_key=True, max_length=15)
+    id_especialista = models.AutoField(primary_key=True)
+    rut_especialista = models.CharField( max_length=15)
     dv = models.CharField(max_length=1, null=True)
     nombre = models.CharField(max_length=30)
     apellido = models.CharField(max_length=30, null=True)
@@ -110,6 +100,7 @@ class Especialista(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
     especialidad = models.ForeignKey(Especialidad, on_delete=models.CASCADE, null=True)
     tipo_titulo = models.ForeignKey(Titulo, on_delete=models.CASCADE, null=True)
+    ususario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         nombre_apellido = self.nombre+" "+self.apellido
@@ -166,7 +157,6 @@ class Paciente(models.Model):
     fecha_nacimiento = models.DateField(null=True)
     telefono = models.IntegerField(null=True)
     genero = models.ForeignKey(Genero, on_delete=models.CASCADE, null=True)
-    convenio = models.ForeignKey(Convenio, on_delete=models.CASCADE, null=True)
     prevision = models.ForeignKey(Prevision, on_delete=models.CASCADE, null=True)
     usuario =  models.ForeignKey( User, on_delete=models.CASCADE, null=True)
 

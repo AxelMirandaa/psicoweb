@@ -15,6 +15,8 @@ from rest_framework import viewsets
 from .serializers import EspecialistaSerializer
 import json
 from django.conf import settings
+from django.contrib.auth.hashers import make_password
+
 
 
 # Create your views here.
@@ -41,7 +43,7 @@ def detalle_especialista(request,id):
    ## especialista = get_object_or_404(Especialista, rut_especialista=id)
 
     try:
-        datos = Especialista.objects.filter(rut_especialista=id).get()
+        datos = Especialista.objects.filter(id_especialista=id).get()
     except Especialista.DoesNotExist:
         pass
 
@@ -69,6 +71,14 @@ def agregar_especialista(request):
         formulario = especialistaForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
+            
+            usuario = User.objects.create(username=formulario.cleaned_data["correo"], 
+                                    first_name = formulario.cleaned_data["nombre"],
+                                    last_name = formulario.cleaned_data["apellido"],
+                                    email = formulario.cleaned_data["correo"],
+                                    password = make_password('clinicalocura'))
+                                    
+            formulario.usuario = usuario
             messages.success(request, "Guardado correctamente")
         else:
             data["form"] = formulario
@@ -91,7 +101,7 @@ def listar_especialistas(request):
 @permission_required('app.change_especialista')
 def modificar_especialista(request, id):
     
-    especialista = get_object_or_404(Especialista, rut_especialista=id)
+    especialista = get_object_or_404(Especialista, id_especialista=id)
 
     data = {
         'form': especialistaForm(instance=especialista)
@@ -111,7 +121,7 @@ def modificar_especialista(request, id):
 
 @permission_required('app.delete_especialista')
 def eliminar_especialista(request, id):
-    especialista = get_object_or_404(Especialista, rut_especialista=id)
+    especialista = get_object_or_404(Especialista, id_especialista=id)
     especialista.delete()
     messages.success(request, "Eliminado correctamente")
 
@@ -352,7 +362,7 @@ def registro(request):
             formulario.save()
             user = authenticate(username = formulario.cleaned_data["username"], password = formulario.cleaned_data["password1"])
             Paciente.objects.create(id_paciente=user.id, usuario = user)
-            UsersMetadata.objects.create(correo='', telefono='', direccion='', user_id=user.id)
+            #UsersMetadata.objects.create(correo='', telefono='', direccion='', user_id=user.id)
             login(request, user)
             messages.success(request, "Te has registrado correctamente")
             return  redirect(to="home")
