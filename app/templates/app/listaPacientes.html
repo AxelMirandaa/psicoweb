@@ -49,12 +49,13 @@
                     <tr>
                         <td> {{pa.rut_paciente}}</td><td> {{pa.usuario.first_name}}</td>
                         <td> {{pa.usuario.last_name}}</td><td> {{pa.fecha_nacimiento}}</td>
-                        <td> {{pa.correo}}</td><td> {{pa.telefono}}</td>
+                        <td> {{pa.usuario.email}}</td><td> {{pa.telefono}}</td>
                         <td>
                             <a class="btn btn-info btn-sm " href="{% url 'modificarPaciente' pa.rut_paciente %}">Modificar</a>
-                            <!--
-                                si lo dejo eliminaría al ususario en consecuencia :((
-                                <a  href="#" onclick="eliminarPaciente({{pa.rut_paciente}})" class="btn btn-danger btn-sm">eliminar</a>
+                            
+                            <!--as
+                                si lo dejo eliminaría al ususario en consecuencia :((     
+                                    <a  href="#" onclick="eliminarPaciente({{pa.rut_paciente}})" class="btn btn-danger btn-sm">eliminar</a>
                             -->
                         </td>
                     </tr>

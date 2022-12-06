@@ -19,7 +19,7 @@ from django.core.validators import validate_slug
 
 
 class Region(models.Model):
-    id_region = models.IntegerField(primary_key=True)
+    id_region = models.AutoField(primary_key=True)
     nombre_region = models.CharField(max_length=30, null=True)
 
     def __str__(self):
@@ -32,7 +32,7 @@ class Region(models.Model):
 
 
 class Comuna(models.Model):
-    id_comuna = models.IntegerField(primary_key=True)
+    id_comuna = models.AutoField(primary_key=True)
     nombre_comuna = models.CharField(max_length=30, null=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
 
@@ -59,7 +59,7 @@ class Titulo(models.Model):
 
 
 class Convenio(models.Model):
-    id_convenio = models.IntegerField(primary_key=True)
+    id_convenio = models.AutoField(primary_key=True)
     nombre_convenio = models.CharField(max_length=30, null=True)
     descuento = models.IntegerField()
 
@@ -72,7 +72,7 @@ class Convenio(models.Model):
         verbose_name_plural =  "Convenios"
 
 class Prevision(models.Model):
-    id_prevision = models.IntegerField(primary_key=True)
+    id_prevision = models.AutoField(primary_key=True)
     nombre_prevision = models.CharField(max_length=30, null=True)
 
     def __str__(self):
@@ -85,7 +85,7 @@ class Prevision(models.Model):
 
 
 class Especialidad(models.Model):
-    id_especialidad = models.IntegerField(primary_key=True)
+    id_especialidad = models.AutoField(primary_key=True)
     nombre_especialidad = models.CharField(max_length=30, null=True)
 
     def __str__(self):
@@ -138,7 +138,17 @@ def especialista_delete(sender, instance: Especialista, **kwargs):
 
 
 
+class Genero(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100, null=True)
 
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        db_table = 'genero'
+        verbose_name = 'Género'
+        verbose_name_plural = 'Géneros'
 
 
 
@@ -151,10 +161,11 @@ sexo = [
 
 
 class Paciente(models.Model):
-    rut_paciente = models.CharField(primary_key=True, max_length=15)
+    id_paciente = models.AutoField(primary_key=True)
+    rut_paciente = models.CharField(max_length=15, null=True)
     fecha_nacimiento = models.DateField(null=True)
     telefono = models.IntegerField(null=True)
-    sexo = models.IntegerField(choices=sexo, null=True)
+    genero = models.ForeignKey(Genero, on_delete=models.CASCADE, null=True)
     convenio = models.ForeignKey(Convenio, on_delete=models.CASCADE, null=True)
     prevision = models.ForeignKey(Prevision, on_delete=models.CASCADE, null=True)
     usuario =  models.ForeignKey( User, on_delete=models.CASCADE, null=True)
@@ -253,7 +264,7 @@ class Cita(models.Model):
     hora = models.IntegerField(choices=horas, null=True)
     lugar = models.ForeignKey(Region ,on_delete=models.CASCADE, null=True )
     estado = models.ForeignKey(Estado_cita, on_delete=models.CASCADE, null=True)
-    slug = models.SlugField(null=False,blank=False, unique=True, validators=[validate_slug])
+    #slug = models.SlugField(null=False,blank=False, unique=True, validators=[validate_slug])
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='citas')
     especialista = models.ForeignKey(Especialista, on_delete=models.CASCADE, null=True)
 
@@ -265,12 +276,12 @@ class Cita(models.Model):
         verbose_name = "Cita"
         verbose_name_plural =  "Citas"
 
-def set_slug(sender, instance, *args, **kwargs):
-    if instance.slug:
-        return
-    instance.slug = slugify(instance.fecha.strftime('%d-%m-%Y') + str(instance.hora))
+#def set_slug(sender, instance, *args, **kwargs):
+#    if instance.slug:
+#        return
+#    instance.slug = slugify(instance.fecha.strftime('%d-%m-%Y') + str(instance.hora))#
 
-pre_save.connect(set_slug, sender = Cita)
+#pre_save.connect(set_slug, sender = Cita)
 
 
 opciones_consulta = [
@@ -298,7 +309,7 @@ class Consulta(models.Model):
 
 
 class Taller(models.Model):
-    id_taller = models.IntegerField(primary_key=True)
+    id_taller = models.AutoField(primary_key=True)
     nombre_taller = models.CharField(max_length=50, null=True)
     descripcion = models.CharField(max_length=300, blank=True, null=True)
     imagen = models.ImageField(upload_to="talleres" ,blank=True ,null=True)
@@ -313,32 +324,76 @@ class Taller(models.Model):
         verbose_name = "Taller"
         verbose_name_plural =  "Talleres"
 
-class Boleta(models.Model): 
-    id_boleta = models.AutoField(primary_key=True)
-    fecha = models.DateField(blank=True, null=True)
-    monto = models.IntegerField(blank=True, null=True)
+
+
+
+
+class UsersMetadata(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, models.DO_NOTHING)
+    genero = models.ForeignKey(Genero, models.DO_NOTHING, null=True)
+    comuna = models.ForeignKey(Comuna, models.DO_NOTHING, default=1)
+    correo = models.CharField(max_length=100, blank=True, null=True)
+    telefono = models.CharField(max_length=100, blank=True, null=True)
+    direccion = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.id_boleta
+        nombre_apellido = self.user.first_name+" "+self.user.last_name
+        return nombre_apellido
 
-    class Meta:
-        db_table = "Boleta"
-        verbose_name = "Boleta"
-        verbose_name_plural =  "Boletas"
+       
 
-class Tutor(models.Model):
-    rut_tutor = models.CharField(primary_key=True, max_length=15)
-    nombre = models.CharField(max_length=50, null=True)
-    apellido = models.CharField(max_length=50, null=True)
-    correo = models.CharField(max_length=50, null=True)
-    telefono = models.IntegerField(null=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, null=True)
+
+####carrito
+class Carrito(models.Model):
+	especialista = models.ForeignKey(Especialista, models.DO_NOTHING)
+	users_metadata = models.ForeignKey(UsersMetadata, models.DO_NOTHING, default=1)
+	cantidad = models.PositiveIntegerField(default=0)
+	fecha = models.DateField(auto_now=True, null=True, blank=True)
+
+	def __str__(self):
+		return f"{self.especialista.nombre}"
+
+
+	class Meta:
+		db_table = 'carrito'
+		verbose_name = 'Carrito'
+		verbose_name_plural = 'Carrito'
+
+
+class Estado(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.rut_tutor
-    
+        return self.nombre
+
     class Meta:
-        db_table = "Tutor"
-        verbose_name = "Tutor"
-        verbose_name_plural =  "Tutores"
+        db_table = 'estado'
+        verbose_name = 'Estado'
+        verbose_name_plural = 'Estados'
+
+
+class OrdenDeCompra(models.Model):
+    usuario = models.ForeignKey(Paciente, models.DO_NOTHING, default=1)
+    estado = models.ForeignKey(Estado, models.DO_NOTHING, default=3)
+    token_ws = models.CharField(max_length=255, default='0')
+    tarjeta = models.CharField(max_length=10, default='0')
+    fecha_transbank = models.CharField(max_length=100, default='0')
+    estado_transbank = models.CharField(max_length=100, default='0')
+    suma = models.PositiveIntegerField(default=0)
+    observaciones = models.TextField(default='')
+    fecha = models.DateField(auto_now=True, null=True, blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"N°{self.id}"
+
+
+    class Meta:
+        db_table = 'orden_de_compra'
+        verbose_name = 'Orden de compra'
+        verbose_name_plural = 'Órdenes de compra'
+
+
 

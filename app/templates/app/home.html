@@ -77,20 +77,22 @@
   <!------------- PRODUCTOS -------------->
   <section>
     <div class="container">
-        <h3 class="titulo">Psicólogos</h3>
+        <h3 class="titulo">especialistas</h3>
         <div class="row">
             {% for e in especialistas %}
             <div class="col-md-3 col-sm-6  producto">
                 <div class="card">
                     <img class="img" style="width: 254px; height: 220px;" src="{{ e.imagen.url }}" class="card-img-top" alt="imagen">
                     <div class="card-body">
-                        <h5 class="card-title">{{e.nombre }}</h5>
+                        <h5 class="card-title">{{e.nombre }} {{e.apellido}}</h5>
                         <p class="card-text">{{ e.correo }}</p>
                         <p class="card-text">{{e.especialidad}}</p>
                         <div>
                             <a href="{% url 'detalle_especialista' e.rut_especialista %}" class="btn btn-info">Ver
                                 detalles</a>
+                          <!--
                             <a href="{% url 'crearCita' %}" class="btn btn-secondary">Agendar</a>
+                          -->
                         </div>
                     </div>
                 </div>

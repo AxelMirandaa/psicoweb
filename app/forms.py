@@ -75,7 +75,7 @@ class citaForm(forms.ModelForm):
     
     def clean(self):
         try:
-            cita = Cita.objects.get(hora = self.cleaned_data["hora"], fecha = self.cleaned_data["fecha"])
+            cita = Cita.objects.get(hora = self.cleaned_data["hora"], fecha = self.cleaned_data["fecha"], especialista = self.cleaned_data["especialista"])
         
             if not self.instance.pk:
                 raise forms.ValidationError("hora ya tomada")

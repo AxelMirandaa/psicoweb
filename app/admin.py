@@ -1,6 +1,6 @@
 import imp
 from django.contrib import admin
-from .models import Boleta,Cita,Comuna,Consulta,Convenio,Especialidad,Especialista,FichaAtencion,Paciente,Prevision,Region,Taller,Titulo,Estado_cita,Tracking
+from .models import *
 from utilidades import formularios
 
 
@@ -19,8 +19,11 @@ class TrackingAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register( Tracking,TrackingAdmin)
-admin.site.register(Boleta)
+admin.site.register(Tracking,TrackingAdmin)
+admin.site.register(Estado)
+admin.site.register(Carrito)
+admin.site.register(OrdenDeCompra)
+admin.site.register(Genero)
 admin.site.register(Cita, CitaAdmin)
 admin.site.register(Comuna)
 admin.site.register(Consulta)

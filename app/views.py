@@ -1,6 +1,8 @@
 from ast import If
 from django.forms import PasswordInput
 from django.shortcuts import render, redirect, get_object_or_404 
+from django.http import Http404, HttpResponseRedirect, HttpResponse
+from utilidades import utilidades#, webpay
 from django.urls import is_valid_path
 from requests import request
 from .models import *
@@ -11,6 +13,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, permission_required
 from rest_framework import viewsets
 from .serializers import EspecialistaSerializer
+import json
+from django.conf import settings
 
 
 # Create your views here.
@@ -182,7 +186,7 @@ def cita(request, id):
         formulario = citaForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Cita creada correctamente")
+            messages.success(request, "Cita Modificada correctamente")
         else:
             data["form"] = formulario
     
@@ -309,20 +313,24 @@ def agendarCita(request):
 
 def modificarCita(request, id):
     
-    cita = Cita.objects.get(id_cita=id)
+    cita = get_object_or_404(Cita, id_cita=id)
+
     data = {
-        'form':citaForm(instance=cita)
+        'form': citaForm(instance=cita)
     }
 
     if request.method == 'POST':
-        formulario = citaForm(data=request.POST, files=request.FILES)
+        formulario = citaForm(data=request.POST, instance=cita ,files=request.FILES)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificado correctamente")
-        else:
-            data["form"] = formulario
-    
-    return render(request, 'app/modificarCita.html', data)
+            return redirect(to="citasAgendadas")
+        
+        data['form'] = formulario
+
+    return render(request,'app/modificarCita.html',data)
+
+
 
 def cancelarCita(request,id):
     cita = Cita.objects.get(id_cita=id)
@@ -343,8 +351,15 @@ def registro(request):
         if formulario.is_valid():
             formulario.save()
             user = authenticate(username = formulario.cleaned_data["username"], password = formulario.cleaned_data["password1"])
+            Paciente.objects.create(id_paciente=user.id, usuario = user)
+            UsersMetadata.objects.create(correo='', telefono='', direccion='', user_id=user.id)
             login(request, user)
             messages.success(request, "Te has registrado correctamente")
             return  redirect(to="home")
 
     return render(request, 'registration/registro.html', data)
+
+
+
+
+#

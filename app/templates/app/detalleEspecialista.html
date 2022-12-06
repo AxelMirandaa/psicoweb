@@ -42,5 +42,10 @@
 </div>
 </section>
 
+{% csrf_token %}
+         <input type="hidden" name="id" id="id" value="{{datos.id}}" />
+         <input type="hidden" name="cantidad" />
+       </form>
+
 
 {% endblock %}
