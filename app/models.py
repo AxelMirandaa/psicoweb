@@ -89,7 +89,6 @@ class Especialidad(models.Model):
 class Especialista(models.Model):
     id_especialista = models.AutoField(primary_key=True)
     rut_especialista = models.CharField( max_length=15)
-    dv = models.CharField(max_length=1, null=True)
     nombre = models.CharField(max_length=30)
     apellido = models.CharField(max_length=30, null=True)
     correo = models.CharField(max_length=40)
@@ -303,7 +302,7 @@ class Taller(models.Model):
     nombre_taller = models.CharField(max_length=50, null=True)
     descripcion = models.CharField(max_length=300, blank=True, null=True)
     imagen = models.ImageField(upload_to="talleres" ,blank=True ,null=True)
-    precio = models.IntegerField(blank=True, null=True)
+    lugar = models.CharField(max_length=50,blank=True, null=True)
     especialista = models.ForeignKey(Especialista, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
@@ -374,7 +373,7 @@ class OrdenDeCompra(models.Model):
     suma = models.PositiveIntegerField(default=0)
     observaciones = models.TextField(default='')
     fecha = models.DateField(auto_now=True, null=True, blank=True)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"N°{self.id}"

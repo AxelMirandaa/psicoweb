@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from telnetlib import LOGOUT
-
+from django.utils.html import format_html
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -153,7 +153,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 JAZZMIN_SETTINGS = {
     "site_title": "Administracións",
-    "site_logo": "/app/img/logo.png",
+    #"site_logo": "/app/img/logo.png",
+    #"site_logo_classes": "img-circle",
     "copyright": "Axel, Nicolas, Molly",
     }
 
@@ -162,7 +163,7 @@ JAZZMIN_SETTINGS = {
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
     "footer_small_text": False,
-    "body_small_text": False,
+    "body_small_text": True,
     "brand_small_text": False,
     "brand_colour": "navbar-info",
     "accent": "accent-info",
@@ -197,3 +198,9 @@ JAZZMIN_UI_TWEAKS = {
 #JAZZMIN_SETTINGS = {
 #    "show_ui_builder": "True"
 #    }
+
+
+WEBPAY_URL="https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions"
+WEBPAY_ID="597055555532"
+WEBPAY_SECRET="579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C"
+

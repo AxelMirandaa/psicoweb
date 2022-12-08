@@ -59,30 +59,41 @@
 
 
 
-<!--
-<section class="parallax-chico">
-    <h2>Poner Titulo</h2>
-</section>
 
--->
+
+
+
 
 <section id="nosotros" class="center espacio">
- <h2 >Clínica Locura</h2>
- <p> Magnam eos debitis ab similique atque obcaecati voluptas porro officiis cumque odio officia aperiam quibusdam sed, quas vero earum? Esse placeat soluta explicabo consequuntur illo recusandae amet voluptatibus pariatur exercitationem et velit voluptates qui, maiores corporis natus ipsam porro accusantium, delectus sapiente cumque aperiam nesciunt deserunt sunt! Soluta vel voluptates et reprehenderit voluptate! Nihil earum placeat libero, non illo laudantium enim cum amet. Itaque, est. Sequi temporibus atque odit perspiciatis numquam, a distinctio architecto, consequatur neque, quae dolor rerum. Magni, quam. Soluta rem ex aspernatur eveniet, voluptates possimus perferendis ad inventore rerum mollitia praesentium quod nostrum similique ullam beatae eos sunt nesciunt ab, accusamus a explicabo corporis iure quae? In quibusdam commodi temporibus.</p>
- </section>
+    <h2>Clínica LoCura</h2>
+    <p> Clínica LoCura es un centro de ayuda para las personas que necesitan un apoyo profesional para afrontar su vida
+        de mejor manera, contamos con profesionales en diversas areas en salud mental, ademas estamos comprometidos con la comunidad
+        y buscamos apoyar de otras formas, ofreciendo talleres gratuitos de cuidados personales e información valiosa para las 
+        personas interesadas en aprender sobre estos temas.
+    </p>
+    </p>
+        Llevamos mas de 10 años con nuestros centros de atención, ofreciendo atención de calidad de forma presencial o de manera remota.
+        nos actualizamos a las nuevas generaciónes y ofrecemos una nueva plataforma para facilitar la toma de horas para citas con nuestros profesionales.
+    </p>
+        
+        
+</section>
 
-
+<section class="parallax-chico">
+    <h2>Clínica LoCura: Atención profesional de calidad</h2>
+</section>
 
 <!-- -->
-  <!------------- PRODUCTOS -------------->
-  <section>
+<!------------- PRODUCTOS -------------->
+<section>
     <div class="container">
         <h3 class="titulo">Especialistas</h3>
         <div class="row">
             {% for e in especialistas %}
             <div class="col-md-3 col-sm-6  producto">
                 <div class="card">
-                    <img class="img" style="width: 254px; height: 220px;" src="{{ e.imagen.url }}" class="card-img-top" alt="imagen">
+                    <img class="img" style="width: 254px; height: 220px;" src="{{ e.imagen.url }}" class="card-img-top"
+                        alt="imagen">
                     <div class="card-body">
                         <h5 class="card-title">{{e.nombre }} {{e.apellido}}</h5>
                         <p class="card-text">{{ e.correo }}</p>
@@ -90,7 +101,7 @@
                         <div>
                             <a href="{% url 'detalle_especialista' e.id_especialista %}" class="btn btn-info">Ver
                                 detalles</a>
-                          <!--
+                            <!--
                             <a href="{% url 'crearCita' %}" class="btn btn-secondary">Agendar</a>
                           -->
                         </div>
@@ -100,84 +111,35 @@
 
             {% endfor %}
         </div>
-        <h4 class="titulo">Destacados </h4>
+        <h4 id="talleres" class="titulo">Talleres </h4>
         <div class="row ">
-            <div class="col-lg-2 col-md-3 col-sm-4 producto ">
+            {% for t in talleres %}
+            <div class=" col-md-6 col-sm-6 producto ">
                 <div class="card">
-                    <img class="img1 " src="{% static 'app/img/carrusel-3.jpg' %}" class="card-img-top " alt="instrumento9 ">
+                    <img class="img1" style="width: auto; height: 303px;" src="{{t.imagen.url}}" class="card-img-top "
+                        alt="instrumento9 ">
+
                     <div class="card-body">
-                        <h5 class="card-title">Nombre</h5>
-                        <p class="card-text ">Universidad</p>
-                        <p class="card-text ">Especialidad?</p>
-                        <a href="#" class="btn btn-info ">Ver
-                            detalles</a>
+
+                        <h5 class="card-title">{{t.nombre_taller}}</h5>
+                        <p class="card-text ">{{t.descripcion}}</p> 
+                        <p class="card-text ">{{t.especialista}}</p>
+                        <p class="card-text ">{{t.lugar}}</p>
+                        <!--
+                            <a href="#" class=" btn-block btn btn-info ">info</a>
+                        -->
+                        
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 producto ">
-                <div class="card">
-                    <img class="img1 " src="{% static 'app/img/carrusel-3.jpg' %}" class="card-img-top " alt="instrumento9 ">
-                    <div class="card-body">
-                        <h5 class="card-title">Nombre</h5>
-                        <p class="card-text ">Universidad</p>
-                        <p class="card-text ">Especialidad?</p>
-                        <a href="#" class="btn btn-info ">Ver
-                            detalles</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 producto ">
-                <div class="card">
-                    <img class="img1 " src="{% static 'app/img/carrusel-3.jpg' %}" class="card-img-top " alt="instrumento9 ">
-                    <div class="card-body">
-                        <h5 class="card-title">Nombre</h5>
-                        <p class="card-text ">Universidad</p>
-                        <p class="card-text ">Especialidad?</p>
-                        <a href="#" class="btn btn-info ">Ver
-                            detalles</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 producto ">
-                <div class="card">
-                    <img class="img1 " src="{% static 'app/img/carrusel-3.jpg' %}" class="card-img-top " alt="instrumento9 ">
-                    <div class="card-body">
-                        <h5 class="card-title">Nombre</h5>
-                        <p class="card-text ">Universidad</p>
-                        <p class="card-text ">Especialidad?</p>
-                        <a href="#" class="btn btn-info ">Ver
-                            detalles</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 producto ">
-                <div class="card">
-                    <img class="img1 " src="{% static 'app/img/carrusel-3.jpg' %}" class="card-img-top " alt="instrumento9 ">
-                    <div class="card-body">
-                        <h5 class="card-title">Nombre</h5>
-                        <p class="card-text ">Universidad</p>
-                        <p class="card-text ">Especialidad?</p>
-                        <a href="#" class="btn btn-info ">Ver
-                            detalles</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 producto ">
-                <div class="card">
-                    <img class="img1 " src="{% static 'app/img/carrusel-3.jpg' %}" class="card-img-top " alt="instrumento9 ">
-                    <div class="card-body">
-                        <h5 class="card-title">Nombre</h5>
-                        <p class="card-text ">Universidad</p>
-                        <p class="card-text ">Especialidad?</p>
-                        <a href="#" class="btn btn-info ">Ver
-                            detalles</a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-    </div>
-    </div>
-</section>  
+
+
+
+
+
+</section>
 
 
 

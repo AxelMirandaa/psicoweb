@@ -25,6 +25,7 @@
     <!-- CSS only -->
 </head>
 
+
 <body>
     <!-- NAVBAR-->
     
@@ -70,6 +71,7 @@
                                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                                         {% if user.is_authenticated %}
                                             <a href="#" class="nav-link ">@{{ user.username }}</a>
+                                            <li><a class="dropdown-item" href="{% url 'modificarPaciente' user.id %}">Mis datos</a></li>
                                             <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesión</a></li>
                                         {% else %}
                                             <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesión</a></li>
@@ -105,15 +107,20 @@
                                     <li class="nav-item dropdown d-lg-none mx-auto text-center">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown"
                                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Especialistas
+                                            Citas
                                         </a>
                                         <ul class="dropdown-menu mx-auto text-center"
                                             aria-labelledby="navbarScrollingDropdown">
-                                            <li><a class="dropdown-item" href="{% url 'especialista' %}">Psicologos</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'especialista' %}">Psiquiatras</a></li>
-                                            <li><a class="dropdown-item" href="#">Nutricionistas</a></li>
-                                            <li><a class="dropdown-item" href="#">Ver todo</a></li>
 
+
+                                        {% if user.is_authenticated %}
+                                            <li><a class="dropdown-item" href="{% url 'crearCita' %}">Agendar cita</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'citasAgendadas' %}">Mis citas</a></li>
+                                        {% else %}
+                                            <li><a class="dropdown-item" href="{% url 'crearCita' %}">Agendar</a></li>
+                                        {% endif %}
+                                            
+                            
                                         </ul>
                                     </li>
                                     
@@ -131,12 +138,14 @@
             <ul class="nav nav-pills nav-fill menu-categorias">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false">Especialistas</a>
+                        aria-expanded="false">Citas</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'especialista' %}">Psicologos</a></li>
-                        <li><a class="dropdown-item" href="{% url 'especialista' %}">Psiquiatras</a></li>
-                        <li><a class="dropdown-item" href="#">Nutricionistas</a></li>
-                        <li><a class="dropdown-item" href="#">Ver todo</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{% url 'crearCita' %}">Agendar cita</a></li>
+                            <li><a class="dropdown-item" href="{% url 'citasAgendadas' %}">Mis citas</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'crearCita' %}">Agendar</a></li>
+                        {% endif %}
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -144,7 +153,7 @@
                         aria-expanded="false">Nosotros</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button"
+                    <a href="#talleres" class="nav-link" data-bs-toggle="dropdown" href="#" role="button"
                         aria-expanded="false">Talleres</a>
                     
                 </li>
@@ -207,17 +216,22 @@
                 <div class="col-md-4 centrar">
                     <h4>Nosotros</h4>
                     <ul>
-                        <li><a href="#">Quienes somos</a></li>
+                        <li><a href="#nosotros">Quienes somos</a></li>
                         <li><a href="#">Contactanos</a></li>
-                        <li><a href="#">Trabaja con nosotros</a></li>
+                        
                     </ul>
                 </div>
                 <div class="col-md-4 centrar">
                     <h4>Servicio al Cliente</h4>
                     <ul>
+                        <li><a href="#nosotros">Nosotros</a></li>
                         <li><a href="#">Preguntas Frecuentes</a></li>
-                        <li><a href="#">Condiciones</a></li>
+                        <!--
+                        
+                        
                         <li><a href="#">Devoluciones</a></li>
+                        -->
+                        
                     </ul>
                 </div>
                 <div class="col-md-4 centrar">

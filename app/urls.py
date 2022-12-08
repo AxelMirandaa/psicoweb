@@ -2,11 +2,7 @@ import imp
 from unicodedata import name
 from django.db import router
 from django.urls import path, include
-from .views import home, agregar_especialista, modificar_especialista, listar_especialistas,\
-    eliminar_especialista, crearFicha, especialista, ficha, listaFichas, \
-    crearCita, cita, listaCitas, registroPaciente, listaPacientes, modificarPaciente, eliminarPaciente, \
-     agendarCita, modificarCita, cancelarCita, listadoEspecialista, \
-    registro, EspecialistaViewset, detalle_especialista, paypal
+from .views import *
 from rest_framework import routers 
 
 
@@ -39,6 +35,10 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('detalle-especialista/<id>/', detalle_especialista, name="detalle_especialista"),
     path('paypal/',paypal, name='paypal'),
+    path('webpay/', carro_webpay, name="carro_webpay"),
+	#path('webpay-respuesta/', crearCita, name="carro_webpay_respuesta"),
+    path('pasopago/', pasopago, name="pasopago"),
+
 
     
 

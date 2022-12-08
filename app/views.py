@@ -16,6 +16,8 @@ from .serializers import EspecialistaSerializer
 import json
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
+import random
+import requests
 
 
 
@@ -38,6 +40,9 @@ def paypal(request):
     return render(request, 'app/paypal.html',data)
 
 
+
+
+
 def detalle_especialista(request,id):
 
    ## especialista = get_object_or_404(Especialista, rut_especialista=id)
@@ -54,15 +59,17 @@ def detalle_especialista(request,id):
 
 def home(request):
     especialistas = Especialista.objects.all()
+    talleres = Taller.objects.all()
     data = {
-        'especialistas':especialistas
+        'especialistas':especialistas,
+        'talleres': talleres
     }
 
     return render(request, 'app/home.html', data)
 
 @permission_required('app.add_especialista')
 def agregar_especialista(request):
-
+#
     data = {
         'form':especialistaForm()
     }
@@ -225,7 +232,7 @@ def crearCita(request):
 
             cita.save()
             messages.success(request, "Cita creada correctamente")
-            return redirect(to="home")
+            return redirect(to="paypal")
         else:
             data["form"] = formulario
     
@@ -280,7 +287,7 @@ def listadoEspecialista(request):
 
 
 def modificarPaciente(request, id):
-    paciente = Paciente.objects.get(rut_paciente=id)
+    paciente = Paciente.objects.get(id_paciente=id)
     data = {
         'form': pacienteForm(instance=paciente)
     }
@@ -303,7 +310,7 @@ def eliminarPaciente(request, id):
     return redirect(to="listaPacientes")
 
 
-
+@login_required
 def agendarCita(request):
     
     data = {
@@ -320,6 +327,7 @@ def agendarCita(request):
     
     
     return render(request, 'app/agendarCita.html', data)
+
 
 def modificarCita(request, id):
     
@@ -372,4 +380,40 @@ def registro(request):
 
 
 
-#
+#pago webpay
+
+def crearTransaccion():
+	#se crea la orden de compra
+	suma=20000
+	
+
+	buy_order = (random.randrange(1000000, 99999999))
+	session_id = str(random.randrange(1000000, 99999999))
+	amount = suma
+	ruta=f"http://127.0.0.1:8000/commit"
+	endpoint=settings.WEBPAY_URL
+	payload={
+		 "buy_order": buy_order,
+		 "session_id": session_id,
+		 "amount": amount,
+		 "return_url": ruta
+		}
+	cabeceros = {'content-type': 'application/json', 'Tbk-Api-Key-Id': settings.WEBPAY_ID, 'Tbk-Api-Key-Secret': settings.WEBPAY_SECRET}
+	response= requests.post(endpoint, json=payload, headers=cabeceros)
+	#response.status_code
+	respuesta=json.loads(response.text)
+	#guardo el token recibido
+	#retorno token y URL
+	ruta=f"{respuesta['url']}{respuesta['token']}"
+	return respuesta
+
+
+
+def carro_webpay(request):
+    if request.method =='POST':
+        sesion=f"{request.POST['especialista']}"
+        result=crearTransaccion()
+        return render(request, 'app/webpay.html', {'url': result['url'], 'token': result['token']})
+
+def pasopago(request):
+    return render(request, 'app/pasopago.html')

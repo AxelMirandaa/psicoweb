@@ -1,0 +1,17 @@
+{% extends 'app/base.html' %} {% load static %}
+
+{% block content %}
+pagando...
+<form action="{{ url }}" method="POST" name="form">
+<input type="hidden" name="token_ws" value="{{ token }}">
+{% csrf_token %}
+
+
+</form>
+<script type="text/javascript">
+  window.onload=function()
+  {
+    document.form.submit();
+  };
+</script>
+{% endblock %}

@@ -41,7 +41,7 @@ class especialistaForm(forms.ModelForm):
     class Meta:
         model = Especialista
         #fields = '__all__'
-        fields = ['rut_especialista','dv','nombre','apellido','correo','telefono','precio_consulta','descripcion','imagen','region','especialidad','tipo_titulo']
+        fields = ['rut_especialista','nombre','apellido','correo','telefono','precio_consulta','descripcion','imagen','region','especialidad','tipo_titulo']
 
 
 #Formalario para la creación de fichas

@@ -10,8 +10,8 @@ class CitaAdmin(admin.ModelAdmin):
 	exclude = ('slug',) 
 
 class EspecialistaAdmin(admin.ModelAdmin):
-	list_display = ('rut_especialista','dv','nombre','apellido','correo','telefono','precio_consulta','especialidad')
-	search_fields = ('rut_especialista','dv','nombre','apellido','correo','telefono','precio_consulta','especialidad')
+	list_display = ('rut_especialista','nombre','apellido','correo','telefono','precio_consulta','especialidad')
+	search_fields = ('rut_especialista','nombre','apellido','correo','telefono','precio_consulta','especialidad')
 
 class TrackingAdmin(admin.ModelAdmin):
     list_display = ('id', 'descripcion', 'fecha')
