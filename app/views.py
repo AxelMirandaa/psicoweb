@@ -34,6 +34,7 @@ def paypal(request):
     data = {
         'especialistas':especialistas
     }
+    
 
     
 
@@ -83,9 +84,13 @@ def agregar_especialista(request):
                                     first_name = formulario.cleaned_data["nombre"],
                                     last_name = formulario.cleaned_data["apellido"],
                                     email = formulario.cleaned_data["correo"],
-                                    password = make_password('clinicalocura'))
+                                    password = make_password('clinicalocura'),
+                                    is_staff = 1)
                                     
             formulario.usuario = usuario
+            #usuario.groups.add = 'user_especialista'
+            
+            
             messages.success(request, "Guardado correctamente")
         else:
             data["form"] = formulario

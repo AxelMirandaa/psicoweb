@@ -67,6 +67,9 @@
                                         {% if perms.app.view_especialista %}
                                         <a href="{% url 'listar_especialistas' %}" class="nav-link ">Listado especialistas</a>
                                         {% endif %}
+                                        {% if perms.app.add_ficha_atencion %}
+                                        <a href="{% url 'especialista' %}" class="nav-link ">menú especialista</a>
+                                        {% endif %}
 
                                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                                         {% if user.is_authenticated %}
@@ -77,6 +80,7 @@
                                             <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesión</a></li>
                                             <li><a class="dropdown-item" href="{% url 'registro' %}">Registrate</a></li>
                                         {% endif %}
+
                                         </ul>
                                     </li>
                                 </div>
@@ -157,10 +161,13 @@
                         aria-expanded="false">Talleres</a>
                     
                 </li>
+                <!--
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false">Contacto</a>
+                <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button"
+                aria-expanded="false">Contacto</a>
                 </li>
+                -->
+                
             </ul>
         </section>
     </div>

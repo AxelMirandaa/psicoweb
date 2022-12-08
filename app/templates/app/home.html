@@ -95,9 +95,9 @@
                     <img class="img" style="width: 254px; height: 220px;" src="{{ e.imagen.url }}" class="card-img-top"
                         alt="imagen">
                     <div class="card-body">
-                        <h5 class="card-title">{{e.nombre }} {{e.apellido}}</h5>
+                        <h5 class="card-title">{{e.nombre | capfirst}} {{e.apellido| capfirst}}  </h5>
                         <p class="card-text">{{ e.correo }}</p>
-                        <p class="card-text">{{e.especialidad}}</p>
+                        <p class="card-text">{{e.especialidad| capfirst}}</p>
                         <div>
                             <a href="{% url 'detalle_especialista' e.id_especialista %}" class="btn btn-info">Ver
                                 detalles</a>
@@ -121,10 +121,10 @@
 
                     <div class="card-body">
 
-                        <h5 class="card-title">{{t.nombre_taller}}</h5>
-                        <p class="card-text ">{{t.descripcion}}</p> 
-                        <p class="card-text ">{{t.especialista}}</p>
-                        <p class="card-text ">{{t.lugar}}</p>
+                        <h5 class="card-title">{{t.nombre_taller| capfirst}}</h5>
+                        <p class="card-text ">{{t.descripcion| capfirst}}.</p> 
+                        <p class="card-text ">{{t.especialista| capfirst}}</p>
+                        <p class="card-text ">{{t.lugar| capfirst}}</p>
                         <!--
                             <a href="#" class=" btn-block btn btn-info ">info</a>
                         -->

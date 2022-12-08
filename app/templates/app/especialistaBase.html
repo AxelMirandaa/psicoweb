@@ -28,7 +28,7 @@
         <section class="main-header">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a class="navbar-brand" href="{% url 'home' %}">
+                    <a class="navbar-brand" href="{% url 'especialista' %}">
                         <div class="logo-container">
                             <img src="{% static 'app/img/logo.png' %}" id="logo" alt="logo" class="logo-img">
                             <h4 class="logo-text">
@@ -120,11 +120,11 @@
         <section class="header-bottom d-none d-lg-block">
             <ul class="nav nav-pills nav-fill menu-categorias">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Citas</a>
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Fichas</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'citasAgendadas' %}">Citas agendadas</a></li>
-                        <li><a class="dropdown-item" href="{% url 'crearCita' %}">Nueva cita</a></li>
-                        <li><a class="dropdown-item" href="{% url 'registroPaciente' %}">Nuevo Paciente</a></li>
+                        <li><a class="dropdown-item" href="{% url 'listaFichas' %}">Gestión ficha paciente</a></li>
+                        <li><a class="dropdown-item" href="{% url 'crearFicha' %}">Nueva ficha</a></li>
+                        
 
                     </ul>
                 </li>
@@ -133,13 +133,11 @@
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pacientes</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'listaPacientes' %}">Pacientes</a></li>
-                        <li><a class="dropdown-item" href="{% url 'listaFichas' %}">Gestión ficha paciente</a></li>
-                        <li><a class="dropdown-item" href="{% url 'crearFicha' %}">Nueva ficha</a></li>
+                        <li><a class="dropdown-item" href="{% url 'registroPaciente' %}">Nuevo Paciente</a></li>
+                        
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Cerrar sesión</a>
-                </li>
+              
 
             </ul>
         </section>
