@@ -35,9 +35,6 @@ def paypal(request):
         'especialistas':especialistas
     }
     
-
-    
-
     return render(request, 'app/paypal.html',data)
 
 
@@ -302,7 +299,7 @@ def modificarPaciente(request, id):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Modificado correctamente")
-            return redirect(to="listaPacientes")
+            return redirect(to="home")
     
         data["form"] = formulario
     return render(request, 'app/modificarPaciente.html', data)
@@ -378,7 +375,7 @@ def registro(request):
             #UsersMetadata.objects.create(correo='', telefono='', direccion='', user_id=user.id)
             login(request, user)
             messages.success(request, "Te has registrado correctamente")
-            return  redirect(to="home")
+            return  redirect(to="../modificarPaciente/"+str(user.id))
 
     return render(request, 'registration/registro.html', data)
 
