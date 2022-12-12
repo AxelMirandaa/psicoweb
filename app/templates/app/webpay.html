@@ -1,6 +1,3 @@
-{% extends 'app/base.html' %} {% load static %}
-
-{% block content %}
 pagando...
 <form action="{{ url }}" method="POST" name="form">
 <input type="hidden" name="token_ws" value="{{ token }}">
@@ -14,4 +11,3 @@ pagando...
     document.form.submit();
   };
 </script>
-{% endblock %}

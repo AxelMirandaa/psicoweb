@@ -234,7 +234,7 @@ def crearCita(request):
 
             cita.save()
             messages.success(request, "Cita creada correctamente")
-            return redirect(to="paypal")
+            return redirect(to="pasopago")
         else:
             data["form"] = formulario
     
@@ -392,7 +392,7 @@ def crearTransaccion():
 	buy_order = (random.randrange(1000000, 99999999))
 	session_id = str(random.randrange(1000000, 99999999))
 	amount = suma
-	ruta=f"http://127.0.0.1:8000/commit"
+	ruta=f"http://127.0.0.1:8000/"
 	endpoint=settings.WEBPAY_URL
 	payload={
 		 "buy_order": buy_order,
@@ -412,10 +412,14 @@ def crearTransaccion():
 
 
 def carro_webpay(request):
-    if request.method =='POST':
-        sesion=f"{request.POST['especialista']}"
-        result=crearTransaccion()
-        return render(request, 'app/webpay.html', {'url': result['url'], 'token': result['token']})
+   # sesion=f"{request.POST['especialista']}"
+    result=crearTransaccion()
+    return render(request, 'app/webpay.html', {'url': result['url'], 'token': result['token']})
+
+
+
+
 
 def pasopago(request):
+
     return render(request, 'app/pasopago.html')
